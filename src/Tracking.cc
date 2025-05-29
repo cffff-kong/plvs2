@@ -1757,7 +1757,7 @@ Sophus::SE3f Tracking::GrabImageStereo(const cv::Mat &imRectLeft, const cv::Mat 
 
     TICKTRACK("Track");     
     //cout << "Incoming frame creation" << endl;
-    //双目就走第一个，调用Frame的构造函数
+    //双目就走第一个，调用Frame的构造函数,提取特征点并立体匹配
     if (mSensor == System::STEREO && !mpCamera2)
         mCurrentFrame = Frame(mImGray,mImgGrayRight,timestamp,mpLineExtractorLeft,mpLineExtractorRight,mpORBextractorLeft,mpORBextractorRight,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth,mpCamera);
     else if(mSensor == System::STEREO && mpCamera2)
@@ -2224,6 +2224,7 @@ void Tracking::Track()
     std::cout << "State: " << GetTrackingStateString() << std::endl; //"(" << mState << ")" << std::endl; 
 #endif 
     
+    //初始化咯
     if(mState==NOT_INITIALIZED)
     {
         if(mSensor==System::STEREO || mSensor==System::RGBD || mSensor==System::IMU_STEREO || mSensor==System::IMU_RGBD)

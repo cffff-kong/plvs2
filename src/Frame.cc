@@ -339,14 +339,21 @@ Frame::Frame(const cv::Mat &imLeft, const cv::Mat &imRight, const double &timeSt
 
     N = mvKeys.size();
     if(mvKeys.empty())
+    {
+         std::cout<<"frame "<<mnId<<" 左图没有特征点"<<std::endl;
         return;
+    }
+       
 
-    UndistortKeyPoints();
+    UndistortKeyPoints();  //矫正特征点
 
 #ifdef REGISTER_TIMES
     std::chrono::steady_clock::time_point time_StartStereoMatches = std::chrono::steady_clock::now();
 #endif
-    ComputeStereoMatches();
+//mvuRight[vDistIdx[i].second]！=-1;
+//mvDepth[vDistIdx[i].second]!=-1;
+//满足以上条件的，以vDistIdx[i]为索引的特征点mvKeys[vDistIdx[i].second]是匹配点
+    ComputeStereoMatches();  //找匹配点！！！！
 #ifdef REGISTER_TIMES
     std::chrono::steady_clock::time_point time_EndStereoMatches = std::chrono::steady_clock::now();
 
@@ -394,7 +401,7 @@ Frame::Frame(const cv::Mat &imLeft, const cv::Mat &imRight, const double &timeSt
     mvStereo3Dpoints = vector<Eigen::Vector3f>(0);
     monoLeft = -1;
     monoRight = -1;
-    
+    //mGrid mGridRight
     AssignFeaturesToGrid(); //NOTE: this must stay after having initialized Nleft and Nright
 }
 
@@ -807,13 +814,18 @@ void Frame::AssignFeaturesToGrid()
 //thread threadRight(&Frame::ExtractORB,this,1,imRight,0,0);
 void Frame::ExtractORB(int flag, const cv::Mat &im, const int x0, const int x1)
 {
-    vector<int> vLapping = {x0,x1};
-    if(flag==0)
-        monoLeft = (*mpORBextractorLeft)(im,cv::Mat(),mvKeys,mDescriptors,vLapping);
-        std::cout<<"左图特征点数量: "<<monoLeft<<std::endl;
+    vector<int> vLapping = {x0, x1};
+    if (flag == 0)
+    {
+        monoLeft = (*mpORBextractorLeft)(im, cv::Mat(), mvKeys, mDescriptors, vLapping);
+        std::cout << "左图特征点数量: " << monoLeft << std::endl;
+    }
+
     else
-        monoRight = (*mpORBextractorRight)(im,cv::Mat(),mvKeysRight,mDescriptorsRight,vLapping);
-        std::cout<<"右图特征点数量: "<<monoRight<<std::endl;
+    {
+        monoRight = (*mpORBextractorRight)(im, cv::Mat(), mvKeysRight, mDescriptorsRight, vLapping);
+        std::cout << "右图特征点数量: " << monoRight << std::endl;
+    }
 }
 
 void Frame::ExtractLSD(int flag, const cv::Mat &im)
@@ -1960,10 +1972,12 @@ void Frame::ComputeStereoMatches()
                 }
                 mvDepth[iL]=mbf/disparity;
                 mvuRight[iL] = bestuR;
+                //汉明距和左图索引
                 vDistIdx.push_back(pair<int,int>(bestDist,iL));
             }
         }
     }
+    std::cout<<"有"<<vDistIdx.size()<<"个立体匹配点"<<std::endl;
 
     sort(vDistIdx.begin(),vDistIdx.end());
     const float median = vDistIdx[vDistIdx.size()/2].first;
@@ -1979,7 +1993,6 @@ void Frame::ComputeStereoMatches()
             mvDepth[vDistIdx[i].second]=-1;
         }
     }
-    
     if(mbUseFovCentersKfGenCriterion)
     {
         mMedianDepth = ComputeSceneMedianDepth();

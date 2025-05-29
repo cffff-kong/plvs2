@@ -81,7 +81,7 @@ Stereo.T_c1_c2: !!opencv-matrix  # 左右相机之间的变换矩阵
 # ORB特征参数
 #--------------------------------------------------------------------------------------------
 
-ORBextractor.nFeatures: 2000           # 每帧提取的ORB特征点数量
+ORBextractor.nFeatures: 10000           # 每帧提取的ORB特征点数量
 ORBextractor.scaleFactor: 1.2          # 金字塔层之间的缩放比例
 ORBextractor.nLevels: 8                # 金字塔层数
 ORBextractor.iniThFAST: 8             # FAST角点初始阈值
