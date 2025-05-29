@@ -9,11 +9,13 @@ MonocularSlamNode::MonocularSlamNode(PLVS2::System* pSLAM)
 {
     m_SLAM = pSLAM;
     // std::cout << "slam changed" << std::endl;
+    string name="/ruben/right/image_raw";
     m_image_subscriber = this->create_subscription<ImageMsg>(
-        "camera",
+        name,
         10,
         std::bind(&MonocularSlamNode::GrabImage, this, std::placeholders::_1));
     std::cout << "slam changed" << std::endl;
+    std::cout<<name<<" has been subscribed"<<std::endl;
 }
 
 MonocularSlamNode::~MonocularSlamNode()

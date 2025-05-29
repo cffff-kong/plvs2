@@ -138,15 +138,16 @@ if [[ -n "$OpenCV_DIR" ]]; then
 		exit 1 
 	fi 
 fi 
+OpenCV_DIR="/usr/lib/x86_64-linux-gnu/cmake/opencv4"
 
 # install a local opencv with CUDA support and more
 if [ $USE_LOCAL_OPENCV -eq 1 ] && [[ ! -n "$OpenCV_DIR" ]]; then
 	. install_local_opencv.sh   # source it in order to run it and get the env var OPENCV_VERSION
 	echo OpenCV version: $OPENCV_VERSION
 	if [[ $OPENCV_VERSION == 4* ]]; then
-		OpenCV_DIR="$CONFIG_DIR/Thirdparty/opencv/install/lib/cmake/opencv4"
+		OpenCV_DIR="/usr/lib/x86_64-linux-gnu/cmake/opencv4"
 	else
-		OpenCV_DIR="$CONFIG_DIR/Thirdparty/opencv/install/share/OpenCV"
+		OpenCV_DIR="/usr/lib/x86_64-linux-gnu/cmake/opencv4"
 	fi
 	echo setting OpenCV_DIR: $OpenCV_DIR
     #export LD_LIBRARY_PATH=$CONFIG_DIR/Thirdparty/opencv/install/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}

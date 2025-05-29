@@ -188,7 +188,7 @@ PointCloudMapping.on: 1
 # NOTE: chisel and fastfusion require rectified images if you do not use pointcloud generation 
 PointCloudMapping.type: "voxblox"
 
-PointCloudMapping.resolution: 0.02
+PointCloudMapping.resolution: 0.005
 PointCloudMapping.numKeyframesToQueueBeforeProcessing: 1
 PointCloudMapping.downSampleStep: 2
 PointCloudMapping.minDepth: 0.1

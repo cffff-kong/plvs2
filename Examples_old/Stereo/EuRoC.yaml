@@ -237,14 +237,14 @@ PointCloudMapping.on: 1
 # NOTE: chisel and fastfusion require rectified images if you do not use pointcloud generation 
 PointCloudMapping.type: "voxblox"
 
-PointCloudMapping.resolution: 0.02
+PointCloudMapping.resolution: 0.008
 PointCloudMapping.numKeyframesToQueueBeforeProcessing: 1
 PointCloudMapping.downSampleStep: 2
 PointCloudMapping.minDepth: 0.2
 PointCloudMapping.maxDepth: 10
 PointCloudMapping.removeUnstablePoints: 1
 
-PointCloudMapping.resetOnSparseMapChange: 1
+PointCloudMapping.resetOnSparseMapChange: 1;
 PointCloudMapping.cloudDeformationOnSparseMapChange: 0
 
 # [octree_point] specific params

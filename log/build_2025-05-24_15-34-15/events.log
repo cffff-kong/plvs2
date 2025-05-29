@@ -1,0 +1,225 @@
+[0.000000] (-) TimerEvent: {}
+[0.000163] (plvs) JobQueued: {'identifier': 'plvs', 'dependencies': OrderedDict()}
+[0.000190] (plvs) JobStarted: {'identifier': 'plvs'}
+[0.006236] (plvs) JobProgress: {'identifier': 'plvs', 'progress': 'cmake'}
+[0.006501] (plvs) Command: {'cmd': ['/usr/bin/cmake', '/home/kongdechang/repo/plvs', '-DCMAKE_INSTALL_PREFIX=/home/kongdechang/repo/plvs/install/plvs'], 'cwd': '/home/kongdechang/repo/plvs/build/plvs', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('HOSTNAME', 'rog'), ('GIT_ASKPASS', '/root/.vscode-server/bin/19e0f9e681ecb8e5c09d8784acaa601316ca4571/extensions/git/dist/askpass.sh'), ('SHLVL', '2'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('BROWSER', '/root/.vscode-server/bin/19e0f9e681ecb8e5c09d8784acaa601316ca4571/bin/helpers/browser.sh'), ('HOME', '/root'), ('OLDPWD', '/home/kongdechang/repo'), ('TERM_PROGRAM_VERSION', '1.100.0'), ('VSCODE_IPC_HOOK_CLI', '/tmp/vscode-ipc-555f8d2b-8b91-4841-9a97-141b605e7dfe.sock'), ('ROS_PYTHON_VERSION', '3'), ('VSCODE_GIT_ASKPASS_MAIN', '/root/.vscode-server/bin/19e0f9e681ecb8e5c09d8784acaa601316ca4571/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/root/.vscode-server/bin/19e0f9e681ecb8e5c09d8784acaa601316ca4571/node'), ('LC_CTYPE', 'C.UTF-8'), ('COLORTERM', 'truecolor'), ('REMOTE_CONTAINERS', 'true'), ('ROS_DISTRO', 'humble'), ('REMOTE_CONTAINERS_IPC', '/tmp/vscode-remote-containers-ipc-cb8e3a09-de2d-45dd-b01a-3a459b8baad3.sock'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('QT_X11_NO_MITSHM', '1'), ('PATH', '/root/.vscode-server/bin/19e0f9e681ecb8e5c09d8784acaa601316ca4571/bin/remote-cli:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand'), ('REMOTE_CONTAINERS_SOCKETS', '["/tmp/vscode-ssh-auth-cb8e3a09-de2d-45dd-b01a-3a459b8baad3.sock","/root/.gnupg/S.gpg-agent"]'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XAUTHORITY', '/var/tmp/.docker.xauth_0 (X 权限文件)'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/tmp/vscode-git-1f6a807804.sock'), ('TERM_PROGRAM', 'vscode'), ('SSH_AUTH_SOCK', '/tmp/vscode-ssh-auth-cb8e3a09-de2d-45dd-b01a-3a459b8baad3.sock'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('DEBIAN_FRONTEND', 'noninteractive'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('PWD', '/home/kongdechang/repo/plvs/build/plvs'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1')]), 'shell': False}
+[0.021956] (plvs) StderrLine: {'line': b'\x1b[0mCMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):\n'}
+[0.022102] (plvs) StderrLine: {'line': b'  Compatibility with CMake < 2.8.12 will be removed from a future version of\n'}
+[0.022167] (plvs) StderrLine: {'line': b'  CMake.\n'}
+[0.022235] (plvs) StderrLine: {'line': b'\n'}
+[0.022295] (plvs) StderrLine: {'line': b'  Update the VERSION argument <min> value or use a ...<max> suffix to tell\n'}
+[0.022352] (plvs) StderrLine: {'line': b'  CMake that the project does not need compatibility with older versions.\n'}
+[0.022408] (plvs) StderrLine: {'line': b'\n'}
+[0.022463] (plvs) StderrLine: {'line': b'\x1b[0m\n'}
+[0.099684] (-) TimerEvent: {}
+[0.142895] (plvs) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[0.199900] (-) TimerEvent: {}
+[0.241327] (plvs) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[0.252040] (plvs) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[0.300086] (-) TimerEvent: {}
+[0.320515] (plvs) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[0.325965] (plvs) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[0.326252] (plvs) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[0.326916] (plvs) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[0.330727] (plvs) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[0.400335] (-) TimerEvent: {}
+[0.422283] (plvs) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[0.428013] (plvs) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[0.428152] (plvs) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[0.428425] (plvs) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[0.428818] (plvs) StdoutLine: {'line': b'-- CMAKE_CXX_FLAGS:  -Wall -O3 -fPIC -DNDEBUG -Wno-unused-parameter -Wno-unused-function -march=native -fopenmp\n'}
+[0.428904] (plvs) StderrLine: {'line': b'\x1b[0mBuild type: Release\x1b[0m\n'}
+[0.428960] (plvs) StdoutLine: {'line': b'-- WITH_CUDA: OFF\n'}
+[0.431767] (plvs) StdoutLine: {'line': b'-- Found Eigen3: /usr/include/eigen3 (Required is at least version "3.1.0") \n'}
+[0.431842] (plvs) StdoutLine: {'line': b'-- eigen include: /usr/include/eigen3\n'}
+[0.500586] (-) TimerEvent: {}
+[0.600994] (-) TimerEvent: {}
+[0.656650] (plvs) StdoutLine: {'line': b'-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: thread system serialization \n'}
+[0.663003] (plvs) StdoutLine: {'line': b'-- Number of avx2 occurrences in /proc/cpuinfo: 32\n'}
+[0.663338] (plvs) StdoutLine: {'line': b'-- Number of sse3 occurrences in /proc/cpuinfo: 32\n'}
+[0.663467] (plvs) StdoutLine: {'line': b'-- Number of sse4 occurrences in /proc/cpuinfo: 64\n'}
+[0.663582] (plvs) StdoutLine: {'line': b'-- Building fastfusion! ***************\n'}
+[0.663691] (plvs) StdoutLine: {'line': b'-- Desired OpenCV version: 4\n'}
+[0.675328] (plvs) StdoutLine: {'line': b'-- Found OpenCV: /usr (found suitable version "4.5.4", minimum required is "4") \n'}
+[0.675507] (plvs) StdoutLine: {'line': b'-- found OpenCV version: 4.5.4\n'}
+[0.675591] (plvs) StdoutLine: {'line': b'-- opencv include: /usr/include/opencv4\n'}
+[0.675668] (plvs) StdoutLine: {'line': b'-- opencv lib dirs: /usr\n'}
+[0.675744] (plvs) StdoutLine: {'line': b'-- opencv libs: opencv_calib3d;opencv_core;opencv_dnn;opencv_features2d;opencv_flann;opencv_highgui;opencv_imgcodecs;opencv_imgproc;opencv_ml;opencv_objdetect;opencv_photo;opencv_stitching;opencv_video;opencv_videoio;opencv_alphamat;opencv_aruco;opencv_barcode;opencv_bgsegm;opencv_bioinspired;opencv_ccalib;opencv_datasets;opencv_dnn_objdetect;opencv_dnn_superres;opencv_dpm;opencv_face;opencv_freetype;opencv_fuzzy;opencv_hdf;opencv_hfs;opencv_img_hash;opencv_intensity_transform;opencv_line_descriptor;opencv_mcc;opencv_optflow;opencv_phase_unwrapping;opencv_plot;opencv_quality;opencv_rapid;opencv_reg;opencv_rgbd;opencv_saliency;opencv_shape;opencv_stereo;opencv_structured_light;opencv_superres;opencv_surface_matching;opencv_text;opencv_tracking;opencv_videostab;opencv_viz;opencv_wechat_qrcode;opencv_ximgproc;opencv_xobjdetect;opencv_xphoto\n'}
+[0.675836] (plvs) StdoutLine: {'line': b'-- set custom pangolin folder: /home/kongdechang/repo/plvs/Thirdparty/Pangolin/build/\n'}
+[0.677504] (plvs) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[0.677651] (plvs) StdoutLine: {'line': b'-- pangolin include: \n'}
+[0.677717] (plvs) StdoutLine: {'line': b'-- pangolin libs: pango_core;pango_display;pango_geometry;pango_glgeometry;pango_image;pango_opengl;pango_packetstream;pango_plot;pango_python;pango_scene;pango_tools;pango_vars;pango_video;pango_windowing;tinyobj\n'}
+[0.687969] (plvs) StderrLine: {'line': b'\x1b[33mCMake Warning at CMakeLists.txt:207 (find_package):\n'}
+[0.688093] (plvs) StderrLine: {'line': b'  By not providing "Findrealsense2.cmake" in CMAKE_MODULE_PATH this project\n'}
+[0.688143] (plvs) StderrLine: {'line': b'  has asked CMake to find a package configuration file provided by\n'}
+[0.688189] (plvs) StderrLine: {'line': b'  "realsense2", but CMake did not find one.\n'}
+[0.688241] (plvs) StderrLine: {'line': b'\n'}
+[0.688285] (plvs) StderrLine: {'line': b'  Could not find a package configuration file provided by "realsense2" with\n'}
+[0.688330] (plvs) StderrLine: {'line': b'  any of the following names:\n'}
+[0.688372] (plvs) StderrLine: {'line': b'\n'}
+[0.688414] (plvs) StderrLine: {'line': b'    realsense2Config.cmake\n'}
+[0.688457] (plvs) StderrLine: {'line': b'    realsense2-config.cmake\n'}
+[0.688499] (plvs) StderrLine: {'line': b'\n'}
+[0.688541] (plvs) StderrLine: {'line': b'  Add the installation prefix of "realsense2" to CMAKE_PREFIX_PATH or set\n'}
+[0.688583] (plvs) StderrLine: {'line': b'  "realsense2_DIR" to a directory containing one of the above files.  If\n'}
+[0.688626] (plvs) StderrLine: {'line': b'  "realsense2" provides a separate development package or SDK, be sure it has\n'}
+[0.688675] (plvs) StderrLine: {'line': b'  been installed.\n'}
+[0.688718] (plvs) StderrLine: {'line': b'\n'}
+[0.688761] (plvs) StderrLine: {'line': b'\x1b[0m\n'}
+[0.697888] (plvs) StdoutLine: {'line': b"-- Checking for module 'eigen3'\n"}
+[0.701066] (-) TimerEvent: {}
+[0.710871] (plvs) StdoutLine: {'line': b'--   Found eigen3, version 3.4.0\n'}
+[0.753885] (plvs) StdoutLine: {'line': b'-- Found Eigen: /usr/include/eigen3 (Required is at least version "3.1") \n'}
+[0.754157] (plvs) StdoutLine: {'line': b'-- Eigen found (include: /usr/include/eigen3, version: 3.4.0)\n'}
+[0.769171] (plvs) StdoutLine: {'line': b'-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found suitable version "1.74.0", minimum required is "1.65.0") found components: system filesystem date_time iostreams serialization \n'}
+[0.793563] (plvs) StdoutLine: {'line': b"-- Checking for module 'flann'\n"}
+[0.801437] (-) TimerEvent: {}
+[0.809954] (plvs) StdoutLine: {'line': b'--   Found flann, version 1.9.1\n'}
+[0.872520] (plvs) StdoutLine: {'line': b'-- Found FLANN: /usr/lib/x86_64-linux-gnu/libflann_cpp.so  \n'}
+[0.872642] (plvs) StdoutLine: {'line': b'-- FLANN found (include: /usr/include, lib: /usr/lib/x86_64-linux-gnu/libflann_cpp.so)\n'}
+[0.892576] (plvs) StdoutLine: {'line': b'-- Found GLEW: /usr/lib/x86_64-linux-gnu/libGLEW.so  \n'}
+[0.896108] (plvs) StdoutLine: {'line': b'-- Found OpenGL: /usr/lib/x86_64-linux-gnu/libOpenGL.so  found components: OpenGL GLX \n'}
+[0.901489] (-) TimerEvent: {}
+[1.001705] (-) TimerEvent: {}
+[1.051553] (plvs) StdoutLine: {'line': b'-- Found MPI_C: /usr/lib/x86_64-linux-gnu/libmpi.so (found version "3.1") \n'}
+[1.051806] (plvs) StdoutLine: {'line': b'-- Found MPI: TRUE (found version "3.1") found components: C \n'}
+[1.054455] (plvs) StdoutLine: {'line': b'-- Found JsonCpp: /usr/lib/x86_64-linux-gnu/libjsoncpp.so (found suitable version "1.9.5", minimum required is "0.7.0") \n'}
+[1.063681] (plvs) StdoutLine: {'line': b'-- Found ZLIB: /usr/lib/x86_64-linux-gnu/libz.so (found version "1.2.11") \n'}
+[1.074990] (plvs) StdoutLine: {'line': b'-- Found PNG: /usr/lib/x86_64-linux-gnu/libpng.so (found version "1.6.37") \n'}
+[1.090629] (plvs) StdoutLine: {'line': b'-- Found Eigen3: /usr/include/eigen3 (found version "3.4.0") \n'}
+[1.101779] (-) TimerEvent: {}
+[1.165083] (plvs) StdoutLine: {'line': b'-- Found X11: /usr/include   \n'}
+[1.165594] (plvs) StdoutLine: {'line': b'-- Looking for XOpenDisplay in /usr/lib/x86_64-linux-gnu/libX11.so;/usr/lib/x86_64-linux-gnu/libXext.so\n'}
+[1.201974] (-) TimerEvent: {}
+[1.266638] (plvs) StdoutLine: {'line': b'-- Looking for XOpenDisplay in /usr/lib/x86_64-linux-gnu/libX11.so;/usr/lib/x86_64-linux-gnu/libXext.so - found\n'}
+[1.266773] (plvs) StdoutLine: {'line': b'-- Looking for gethostbyname\n'}
+[1.302157] (-) TimerEvent: {}
+[1.335890] (plvs) StdoutLine: {'line': b'-- Looking for gethostbyname - found\n'}
+[1.336011] (plvs) StdoutLine: {'line': b'-- Looking for connect\n'}
+[1.402385] (-) TimerEvent: {}
+[1.419534] (plvs) StdoutLine: {'line': b'-- Looking for connect - found\n'}
+[1.419815] (plvs) StdoutLine: {'line': b'-- Looking for remove\n'}
+[1.502487] (-) TimerEvent: {}
+[1.507880] (plvs) StdoutLine: {'line': b'-- Looking for remove - found\n'}
+[1.507998] (plvs) StdoutLine: {'line': b'-- Looking for shmat\n'}
+[1.582074] (plvs) StdoutLine: {'line': b'-- Looking for shmat - found\n'}
+[1.582261] (plvs) StdoutLine: {'line': b'-- Looking for IceConnectionNumber in ICE\n'}
+[1.602591] (-) TimerEvent: {}
+[1.664993] (plvs) StdoutLine: {'line': b'-- Looking for IceConnectionNumber in ICE - found\n'}
+[1.702758] (-) TimerEvent: {}
+[1.756985] (plvs) StdoutLine: {'line': b'-- Found EXPAT: /usr/lib/x86_64-linux-gnu/libexpat.so (found version "2.4.7") \n'}
+[1.759914] (plvs) StdoutLine: {'line': b'-- Found double-conversion: /usr/lib/x86_64-linux-gnu/libdouble-conversion.so  \n'}
+[1.763385] (plvs) StdoutLine: {'line': b'-- Found LZ4: /usr/lib/x86_64-linux-gnu/liblz4.so (found version "1.9.3") \n'}
+[1.765942] (plvs) StdoutLine: {'line': b'-- Found LZMA: /usr/lib/x86_64-linux-gnu/liblzma.so (found version "5.2.5") \n'}
+[1.802949] (-) TimerEvent: {}
+[1.817347] (plvs) StdoutLine: {'line': b'-- Found JPEG: /usr/lib/x86_64-linux-gnu/libjpeg.so (found version "80") \n'}
+[1.824014] (plvs) StdoutLine: {'line': b'-- Found TIFF: /usr/lib/x86_64-linux-gnu/libtiff.so (found version "4.3.0")  \n'}
+[1.829770] (plvs) StdoutLine: {'line': b'-- Found Freetype: /usr/lib/x86_64-linux-gnu/libfreetype.so (found version "2.11.1") \n'}
+[1.835082] (plvs) StdoutLine: {'line': b'-- Found utf8cpp: /usr/include/utf8cpp  \n'}
+[1.903153] (-) TimerEvent: {}
+[1.904306] (plvs) StdoutLine: {'line': b"-- Checking for module 'libusb-1.0'\n"}
+[1.921975] (plvs) StdoutLine: {'line': b'--   Found libusb-1.0, version 1.0.25\n'}
+[1.969186] (plvs) StdoutLine: {'line': b'-- Found libusb: /usr/lib/x86_64-linux-gnu/libusb-1.0.so  \n'}
+[1.971118] (plvs) StdoutLine: {'line': b'-- Found OpenNI: /usr/lib/libOpenNI.so;libusb::libusb (found version "1.5.4.0") \n'}
+[1.971302] (plvs) StdoutLine: {'line': b'-- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)\n'}
+[2.003391] (-) TimerEvent: {}
+[2.043908] (plvs) StdoutLine: {'line': b'-- Found OpenNI2: /usr/lib/x86_64-linux-gnu/libOpenNI2.so;libusb::libusb (found version "2.2.0.33") \n'}
+[2.044114] (plvs) StdoutLine: {'line': b'-- OpenNI2 found (version: 2.2.0.33, include: /usr/include/openni2, lib: /usr/lib/x86_64-linux-gnu/libOpenNI2.so;libusb::libusb)\n'}
+[2.044307] (plvs) StderrLine: {'line': b'\x1b[0m** WARNING ** io features related to pcap will be disabled\x1b[0m\n'}
+[2.103481] (-) TimerEvent: {}
+[2.144276] (plvs) StdoutLine: {'line': b'-- Eigen found (include: /usr/include/eigen3, version: 3.4.0)\n'}
+[2.148246] (plvs) StdoutLine: {'line': b'-- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)\n'}
+[2.154725] (plvs) StdoutLine: {'line': b'-- OpenNI2 found (version: 2.2.0.33, include: /usr/include/openni2, lib: /usr/lib/x86_64-linux-gnu/libOpenNI2.so;libusb::libusb)\n'}
+[2.203567] (-) TimerEvent: {}
+[2.255542] (plvs) StdoutLine: {'line': b'-- Found Qhull version 8.0.2\n'}
+[2.303657] (-) TimerEvent: {}
+[2.356251] (plvs) StdoutLine: {'line': b'-- OpenNI found (version: 1.5.4.0, include: /usr/include/ni, lib: /usr/lib/libOpenNI.so;libusb::libusb)\n'}
+[2.403736] (-) TimerEvent: {}
+[2.452782] (plvs) StdoutLine: {'line': b'-- looking for PCL_COMMON\n'}
+[2.453307] (plvs) StdoutLine: {'line': b'-- Found PCL_COMMON: /usr/lib/x86_64-linux-gnu/libpcl_common.so  \n'}
+[2.453372] (plvs) StdoutLine: {'line': b'-- looking for PCL_KDTREE\n'}
+[2.453823] (plvs) StdoutLine: {'line': b'-- Found PCL_KDTREE: /usr/lib/x86_64-linux-gnu/libpcl_kdtree.so  \n'}
+[2.453875] (plvs) StdoutLine: {'line': b'-- looking for PCL_OCTREE\n'}
+[2.454313] (plvs) StdoutLine: {'line': b'-- Found PCL_OCTREE: /usr/lib/x86_64-linux-gnu/libpcl_octree.so  \n'}
+[2.454376] (plvs) StdoutLine: {'line': b'-- looking for PCL_SEARCH\n'}
+[2.454719] (plvs) StdoutLine: {'line': b'-- Found PCL_SEARCH: /usr/lib/x86_64-linux-gnu/libpcl_search.so  \n'}
+[2.454768] (plvs) StdoutLine: {'line': b'-- looking for PCL_SAMPLE_CONSENSUS\n'}
+[2.455166] (plvs) StdoutLine: {'line': b'-- Found PCL_SAMPLE_CONSENSUS: /usr/lib/x86_64-linux-gnu/libpcl_sample_consensus.so  \n'}
+[2.455227] (plvs) StdoutLine: {'line': b'-- looking for PCL_FILTERS\n'}
+[2.455576] (plvs) StdoutLine: {'line': b'-- Found PCL_FILTERS: /usr/lib/x86_64-linux-gnu/libpcl_filters.so  \n'}
+[2.455624] (plvs) StdoutLine: {'line': b'-- looking for PCL_2D\n'}
+[2.455769] (plvs) StdoutLine: {'line': b'-- Found PCL_2D: /usr/include/pcl-1.12  \n'}
+[2.455875] (plvs) StdoutLine: {'line': b'-- looking for PCL_GEOMETRY\n'}
+[2.455927] (plvs) StdoutLine: {'line': b'-- Found PCL_GEOMETRY: /usr/include/pcl-1.12  \n'}
+[2.455971] (plvs) StdoutLine: {'line': b'-- looking for PCL_IO\n'}
+[2.456367] (plvs) StdoutLine: {'line': b'-- Found PCL_IO: /usr/lib/x86_64-linux-gnu/libpcl_io.so  \n'}
+[2.456452] (plvs) StdoutLine: {'line': b'-- looking for PCL_FEATURES\n'}
+[2.456958] (plvs) StdoutLine: {'line': b'-- Found PCL_FEATURES: /usr/lib/x86_64-linux-gnu/libpcl_features.so  \n'}
+[2.457008] (plvs) StdoutLine: {'line': b'-- looking for PCL_ML\n'}
+[2.457418] (plvs) StdoutLine: {'line': b'-- Found PCL_ML: /usr/lib/x86_64-linux-gnu/libpcl_ml.so  \n'}
+[2.457492] (plvs) StdoutLine: {'line': b'-- looking for PCL_SEGMENTATION\n'}
+[2.457920] (plvs) StdoutLine: {'line': b'-- Found PCL_SEGMENTATION: /usr/lib/x86_64-linux-gnu/libpcl_segmentation.so  \n'}
+[2.458101] (plvs) StdoutLine: {'line': b'-- looking for PCL_VISUALIZATION\n'}
+[2.458497] (plvs) StdoutLine: {'line': b'-- Found PCL_VISUALIZATION: /usr/lib/x86_64-linux-gnu/libpcl_visualization.so  \n'}
+[2.458564] (plvs) StdoutLine: {'line': b'-- looking for PCL_SURFACE\n'}
+[2.458886] (plvs) StdoutLine: {'line': b'-- Found PCL_SURFACE: /usr/lib/x86_64-linux-gnu/libpcl_surface.so  \n'}
+[2.458986] (plvs) StdoutLine: {'line': b'-- looking for PCL_REGISTRATION\n'}
+[2.459377] (plvs) StdoutLine: {'line': b'-- Found PCL_REGISTRATION: /usr/lib/x86_64-linux-gnu/libpcl_registration.so  \n'}
+[2.459492] (plvs) StdoutLine: {'line': b'-- looking for PCL_KEYPOINTS\n'}
+[2.459881] (plvs) StdoutLine: {'line': b'-- Found PCL_KEYPOINTS: /usr/lib/x86_64-linux-gnu/libpcl_keypoints.so  \n'}
+[2.459999] (plvs) StdoutLine: {'line': b'-- looking for PCL_TRACKING\n'}
+[2.460424] (plvs) StdoutLine: {'line': b'-- Found PCL_TRACKING: /usr/lib/x86_64-linux-gnu/libpcl_tracking.so  \n'}
+[2.460543] (plvs) StdoutLine: {'line': b'-- looking for PCL_RECOGNITION\n'}
+[2.460971] (plvs) StdoutLine: {'line': b'-- Found PCL_RECOGNITION: /usr/lib/x86_64-linux-gnu/libpcl_recognition.so  \n'}
+[2.461115] (plvs) StdoutLine: {'line': b'-- looking for PCL_STEREO\n'}
+[2.461527] (plvs) StdoutLine: {'line': b'-- Found PCL_STEREO: /usr/lib/x86_64-linux-gnu/libpcl_stereo.so  \n'}
+[2.461634] (plvs) StdoutLine: {'line': b'-- looking for PCL_APPS\n'}
+[2.462030] (plvs) StdoutLine: {'line': b'-- Found PCL_APPS: /usr/lib/x86_64-linux-gnu/libpcl_apps.so  \n'}
+[2.462376] (plvs) StdoutLine: {'line': b'-- looking for PCL_IN_HAND_SCANNER\n'}
+[2.462568] (plvs) StdoutLine: {'line': b'-- Found PCL_IN_HAND_SCANNER: /usr/include/pcl-1.12  \n'}
+[2.462670] (plvs) StdoutLine: {'line': b'-- looking for PCL_MODELER\n'}
+[2.462821] (plvs) StdoutLine: {'line': b'-- Found PCL_MODELER: /usr/include/pcl-1.12  \n'}
+[2.462901] (plvs) StdoutLine: {'line': b'-- looking for PCL_POINT_CLOUD_EDITOR\n'}
+[2.471864] (plvs) StdoutLine: {'line': b'-- Found PCL_POINT_CLOUD_EDITOR: /usr/include/pcl-1.12  \n'}
+[2.471935] (plvs) StdoutLine: {'line': b'-- looking for PCL_OUTOFCORE\n'}
+[2.472310] (plvs) StdoutLine: {'line': b'-- Found PCL_OUTOFCORE: /usr/lib/x86_64-linux-gnu/libpcl_outofcore.so  \n'}
+[2.472453] (plvs) StdoutLine: {'line': b'-- looking for PCL_PEOPLE\n'}
+[2.472860] (plvs) StdoutLine: {'line': b'-- Found PCL_PEOPLE: /usr/lib/x86_64-linux-gnu/libpcl_people.so  \n'}
+[2.473257] (plvs) StdoutLine: {'line': b'-- Found PCL: pcl_common;pcl_kdtree;pcl_octree;pcl_search;pcl_sample_consensus;pcl_filters;pcl_io;pcl_features;pcl_ml;pcl_segmentation;pcl_visualization;pcl_surface;pcl_registration;pcl_keypoints;pcl_tracking;pcl_recognition;pcl_stereo;pcl_apps;pcl_outofcore;pcl_people;Boost::system;Boost::filesystem;Boost::date_time;Boost::iostreams;Boost::serialization;/usr/lib/libOpenNI.so;libusb::libusb;/usr/lib/x86_64-linux-gnu/libOpenNI2.so;libusb::libusb;VTK::ChartsCore;VTK::CommonColor;VTK::CommonComputationalGeometry;VTK::CommonCore;VTK::CommonDataModel;VTK::CommonExecutionModel;VTK::CommonMath;VTK::CommonMisc;VTK::CommonTransforms;VTK::FiltersCore;VTK::FiltersExtraction;VTK::FiltersGeneral;VTK::FiltersGeometry;VTK::FiltersModeling;VTK::FiltersSources;VTK::ImagingCore;VTK::ImagingSources;VTK::InteractionImage;VTK::InteractionStyle;VTK::InteractionWidgets;VTK::IOCore;VTK::IOGeometry;VTK::IOImage;VTK::IOLegacy;VTK::IOPLY;VTK::RenderingAnnotation;VTK::RenderingCore;VTK::RenderingContext2D;VTK::RenderingLOD;VTK::RenderingFreeType;VTK::ViewsCore;VTK::ViewsContext2D;VTK::RenderingOpenGL2;VTK::GUISupportQt;FLANN::FLANN;QHULL::QHULL (Required is at least version "1.7") \n'}
+[2.473356] (plvs) StdoutLine: {'line': b'-- pcl include: /usr/include/pcl-1.12;/usr/include/eigen3;/usr/include;/usr/include/ni;/usr/include/openni2\n'}
+[2.473399] (plvs) StdoutLine: {'line': b'-- pcl libs: /usr/lib/x86_64-linux-gnu\n'}
+[2.473435] (plvs) StdoutLine: {'line': b'-- pcl definitions: -DDISABLE_PCAP\n'}
+[2.474327] (plvs) StdoutLine: {'line': b'-- Found Glog: /usr/lib/x86_64-linux-gnu/libglog.so  \n'}
+[2.475660] (plvs) StdoutLine: {'line': b'-- octomap include: /opt/ros/humble/include\n'}
+[2.475708] (plvs) StdoutLine: {'line': b'-- octomap lib dirs: /opt/ros/humble/lib/x86_64-linux-gnu\n'}
+[2.475732] (plvs) StdoutLine: {'line': b'-- octomap libs: /opt/ros/humble/lib/x86_64-linux-gnu/liboctomap.so;/opt/ros/humble/lib/x86_64-linux-gnu/liboctomath.so\n'}
+[2.489866] (plvs) StdoutLine: {'line': b'-- Found Protobuf: /usr/lib/x86_64-linux-gnu/libprotobuf.so (found version "3.12.4") \n'}
+[2.489920] (plvs) StdoutLine: {'line': b'-- protobuf libs: /usr/lib/x86_64-linux-gnu/libprotobuf.so\n'}
+[2.503888] (-) TimerEvent: {}
+[2.504880] (plvs) StdoutLine: {'line': b'-- Found LibCrypto: /usr/lib/x86_64-linux-gnu/libcrypto.a  \n'}
+[2.505011] (plvs) StdoutLine: {'line': b'-- LibCrypto Include Dir: /usr/include\n'}
+[2.505071] (plvs) StdoutLine: {'line': b'-- LibCrypto Shared Lib:  /usr/lib/x86_64-linux-gnu/libcrypto.so\n'}
+[2.505123] (plvs) StdoutLine: {'line': b'-- LibCrypto Static Lib:  /usr/lib/x86_64-linux-gnu/libcrypto.a\n'}
+[2.511972] (plvs) StdoutLine: {'line': b'-- Found PkgConfig: /usr/bin/pkg-config (found version "0.29.2") \n'}
+[2.513358] (plvs) StdoutLine: {'line': b"-- Checking for module 'glfw3'\n"}
+[2.531603] (plvs) StdoutLine: {'line': b'--   Found glfw3, version 3.3.6\n'}
+[2.582399] (plvs) StderrLine: {'line': b'\x1b[0mCUDA_TOOLKIT_ROOT_DIR not found or specified\x1b[0m\n'}
+[2.591504] (plvs) StdoutLine: {'line': b'-- Could NOT find CUDA (missing: CUDA_TOOLKIT_ROOT_DIR CUDA_NVCC_EXECUTABLE CUDA_INCLUDE_DIRS CUDA_CUDART_LIBRARY) \n'}
+[2.592492] (plvs) StdoutLine: {'line': b'-- building with libelas CPU ***************\n'}
+[2.594091] (plvs) StderrLine: {'line': b'\x1b[0mCUDA_TOOLKIT_ROOT_DIR not found or specified\x1b[0m\n'}
+[2.599999] (plvs) StdoutLine: {'line': b'-- Could NOT find CUDA (missing: CUDA_TOOLKIT_ROOT_DIR CUDA_NVCC_EXECUTABLE CUDA_INCLUDE_DIRS CUDA_CUDART_LIBRARY) \n'}
+[2.600890] (plvs) StdoutLine: {'line': b'-- stereo libsgm disabled! ***************\n'}
+[2.601029] (plvs) StdoutLine: {'line': b'-- g2o include: /home/kongdechang/repo/plvs/Thirdparty/g2o/\n'}
+[2.601125] (plvs) StdoutLine: {'line': b'-- g2o lib dirs: \n'}
+[2.601228] (plvs) StdoutLine: {'line': b'-- g2o libs: /home/kongdechang/repo/plvs/Thirdparty/g2o/lib/libg2o.so\n'}
+[2.602241] (plvs) StdoutLine: {'line': b'-- Boost_LIBRARIES: Boost::system;Boost::filesystem;Boost::date_time;Boost::iostreams;Boost::serialization\n'}
+[2.602362] (plvs) StdoutLine: {'line': b'-- EXTERNAL_CORE_LIBS: opencv_calib3d;opencv_core;opencv_dnn;opencv_features2d;opencv_flann;opencv_highgui;opencv_imgcodecs;opencv_imgproc;opencv_ml;opencv_objdetect;opencv_photo;opencv_stitching;opencv_video;opencv_videoio;opencv_alphamat;opencv_aruco;opencv_barcode;opencv_bgsegm;opencv_bioinspired;opencv_ccalib;opencv_datasets;opencv_dnn_objdetect;opencv_dnn_superres;opencv_dpm;opencv_face;opencv_freetype;opencv_fuzzy;opencv_hdf;opencv_hfs;opencv_img_hash;opencv_intensity_transform;opencv_line_descriptor;opencv_mcc;opencv_optflow;opencv_phase_unwrapping;opencv_plot;opencv_quality;opencv_rapid;opencv_reg;opencv_rgbd;opencv_saliency;opencv_shape;opencv_stereo;opencv_structured_light;opencv_superres;opencv_surface_matching;opencv_text;opencv_tracking;opencv_videostab;opencv_viz;opencv_wechat_qrcode;opencv_ximgproc;opencv_xobjdetect;opencv_xphoto;Boost::system;Boost::filesystem;Boost::date_time;Boost::iostreams;Boost::serialization;boost_serialization;boost_thread;pango_core;pango_display;pango_geometry;pango_glgeometry;pango_image;pango_opengl;pango_packetstream;pango_plot;pango_python;pango_scene;pango_tools;pango_vars;pango_video;pango_windowing;tinyobj;/home/kongdechang/repo/plvs/Thirdparty/g2o/lib/libg2o.so;pcl_common;pcl_kdtree;pcl_octree;pcl_search;pcl_sample_consensus;pcl_filters;pcl_io;pcl_features;pcl_ml;pcl_segmentation;pcl_visualization;pcl_surface;pcl_registration;pcl_keypoints;pcl_tracking;pcl_recognition;pcl_stereo;pcl_apps;pcl_outofcore;pcl_people;Boost::system;Boost::filesystem;Boost::date_time;Boost::iostreams;Boost::serialization;/usr/lib/libOpenNI.so;libusb::libusb;/usr/lib/x86_64-linux-gnu/libOpenNI2.so;libusb::libusb;VTK::ChartsCore;VTK::CommonColor;VTK::CommonComputationalGeometry;VTK::CommonCore;VTK::CommonDataModel;VTK::CommonExecutionModel;VTK::CommonMath;VTK::CommonMisc;VTK::CommonTransforms;VTK::FiltersCore;VTK::FiltersExtraction;VTK::FiltersGeneral;VTK::FiltersGeometry;VTK::FiltersModeling;VTK::FiltersSources;VTK::ImagingCore;VTK::ImagingSources;VTK::InteractionImage;VTK::InteractionStyle;VTK::InteractionWidgets;VTK::IOCore;VTK::IOGeometry;VTK::IOImage;VTK::IOLegacy;VTK::IOPLY;VTK::RenderingAnnotation;VTK::RenderingCore;VTK::RenderingContext2D;VTK::RenderingLOD;VTK::RenderingFreeType;VTK::ViewsCore;VTK::ViewsContext2D;VTK::RenderingOpenGL2;VTK::GUISupportQt;FLANN::FLANN;QHULL::QHULL;/usr/lib/x86_64-linux-gnu/libglog.so;/opt/ros/humble/lib/x86_64-linux-gnu/liboctomap.so;/opt/ros/humble/lib/x86_64-linux-gnu/liboctomath.so;/usr/lib/x86_64-linux-gnu/libprotobuf.so;/usr/lib/x86_64-linux-gnu/libcrypto.a;glfw\n'}
+[2.603959] (-) TimerEvent: {}
+[2.607832] (plvs) StdoutLine: {'line': b'-- CMAKE_CXX_FLAGS:  -Wall -O3 -fPIC -DNDEBUG -Wno-unused-parameter -Wno-unused-function -march=native -fopenmp -DSHADERS_DIR=/home/kongdechang/repo/plvs/Shaders -DUSE_FASTFUSION -DUSE_LIBELAS\n'}
+[2.607913] (plvs) StdoutLine: {'line': b'-- CUDA_NVCC_FLAGS: \n'}
+[2.607960] (plvs) StdoutLine: {'line': b'-- Configuring done\n'}
+[2.704053] (-) TimerEvent: {}
+[2.804252] (-) TimerEvent: {}
+[2.874218] (plvs) CommandEnded: {'returncode': -2}
+[2.874555] (plvs) JobEnded: {'identifier': 'plvs', 'rc': 'SIGINT'}
+[2.884843] (-) EventReactorShutdown: {}

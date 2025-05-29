@@ -48,8 +48,10 @@ StereoSlamNode::StereoSlamNode(PLVS2::System* pSLAM, const string &strSettingsFi
         cv::initUndistortRectifyMap(K_r,D_r,R_r,P_r.rowRange(0,3).colRange(0,3),cv::Size(cols_r,rows_r),CV_32F,M1r,M2r);
     }
 
-    left_sub = std::make_shared<message_filters::Subscriber<ImageMsg> >(shared_ptr<rclcpp::Node>(this), "camera/left");
-    right_sub = std::make_shared<message_filters::Subscriber<ImageMsg> >(shared_ptr<rclcpp::Node>(this), "camera/right");
+    left_sub = std::make_shared<message_filters::Subscriber<ImageMsg> >(this, "/ruben/left/image_raw");
+    right_sub = std::make_shared<message_filters::Subscriber<ImageMsg> >(this, "/ruben/right/image_raw");
+    // left_sub = std::make_shared<message_filters::Subscriber<ImageMsg> >(this, "/camera_01/color/image_raw");
+    // right_sub = std::make_shared<message_filters::Subscriber<ImageMsg> >(this, "/camera_01_02/color/image_raw");
 
     syncApproximate = std::make_shared<message_filters::Synchronizer<approximate_sync_policy> >(approximate_sync_policy(10), *left_sub, *right_sub);
     syncApproximate->registerCallback(&StereoSlamNode::GrabStereo, this);

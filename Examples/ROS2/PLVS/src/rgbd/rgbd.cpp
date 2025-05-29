@@ -24,7 +24,7 @@ int main(int argc, char **argv)
     bool bRGB = static_cast<bool> ((int) fSettings["Camera.RGB"]);
     bool bUseViewer = static_cast<int> (PLVS2::Utils::GetParam(fSettings, "Viewer.on", 1)) != 0;
     bool bWaitForCameraInfo = static_cast<int> (PLVS2::Utils::GetParam(fSettings, "Camera.waitCameraInfoOn", 0)) != 0;
-    
+
     float baseline = static_cast<float>(fSettings["Camera.bf"])/static_cast<float>(fSettings["Camera.fx"]);
 
     if(!bUseViewer)
@@ -36,6 +36,7 @@ int main(int argc, char **argv)
 
     auto pSLAM = std::make_shared<PLVS2::System>(argv[1], argv[2], PLVS2::System::RGBD, bUseViewer);
     auto node = std::make_shared<RgbdSlamNode>(pSLAM, bWaitForCameraInfo);
+
     node->SetBaseline(baseline);    
     std::cout << "============================ " << std::endl;
 

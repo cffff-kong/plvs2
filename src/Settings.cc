@@ -154,7 +154,7 @@ namespace PLVS2 {
     Settings::Settings(const std::string &configFile, const int& sensor) :
     bNeedToUndistort_(false), bNeedToRectify_(false), bNeedToResize1_(false), bNeedToResize2_(false) {
         sensor_ = sensor;
-
+        std::cout<<"初始化Settings"<<std::endl;
         //Open settings file
         cv::FileStorage fSettings(configFile, cv::FileStorage::READ);
         if (!fSettings.isOpened()) {
@@ -231,7 +231,7 @@ namespace PLVS2 {
             float fy = readParameter<float>(fSettings,"Camera1.fy",found);
             float cx = readParameter<float>(fSettings,"Camera1.cx",found);
             float cy = readParameter<float>(fSettings,"Camera1.cy",found);
-
+            std::cout << "Camera1: fx=" << fx << ", fy=" << fy << ", cx=" << cx << ", cy=" << cy << std::endl;
             vCalibration = {fx, fy, cx, cy};
 
             calibration1_ = new Pinhole(vCalibration);
@@ -255,8 +255,10 @@ namespace PLVS2 {
             }
 
             //Check if we need to correct distortion from the images
+            // 双目默认不做畸变矫正？
             if((sensor_ == System::MONOCULAR || sensor_ == System::IMU_MONOCULAR) && vPinHoleDistorsion1_.size() != 0){
                 bNeedToUndistort_ = true;
+                std::cout << "Camera1: need to undistort" << std::endl;
             }
         }
         else if(cameraModel == "Rectified"){
@@ -326,6 +328,7 @@ namespace PLVS2 {
         bool found;
         vector<float> vCalibration;
         if (cameraType_ == PinHole) {
+            //这里设置需要进行立体矫正
             bNeedToRectify_ = true;
 
             //Read intrinsic parameters
@@ -333,7 +336,7 @@ namespace PLVS2 {
             float fy = readParameter<float>(fSettings,"Camera2.fy",found);
             float cx = readParameter<float>(fSettings,"Camera2.cx",found);
             float cy = readParameter<float>(fSettings,"Camera2.cy",found);
-
+            std::cout << "Camera2: fx=" << fx << ", fy=" << fy << ", cx=" << cx << ", cy=" << cy << std::endl;
 
             vCalibration = {fx, fy, cx, cy};
 
@@ -426,10 +429,13 @@ namespace PLVS2 {
 
         newImSize_ = originalImSize_;
         int newHeigh = readParameter<int>(fSettings,"Camera.newHeight",found,false);
+        std::cout << "Camera.newHeight=" << newHeigh << std::endl;
+        //设置缩放参数，对内参进行缩放
         if(found){
             bNeedToResize1_ = true;
             newImSize_.height = newHeigh;
 
+            //bNeedToRectify_构造函数默认为false，所以会进入这个循环
             if(!bNeedToRectify_){
                 //Update calibration
                 const float scaleRowFactor = (float)newImSize_.height / (float)originalImSize_.height;
@@ -645,7 +651,7 @@ namespace PLVS2 {
 
             //Update bf
             bf_ = b_ * P1_.at<double>(0,0);
-
+            std::cout << "Stereo.b 又更新啦： " << b_ << std::endl;
             //Update relative pose between camera 1 and IMU if necessary
             if(sensor_ == System::STEREO || sensor_ == System::IMU_STEREO){
                 Tbc_ = Tbc_ * T_r1_u1_.inverse();

@@ -22,7 +22,7 @@ int main(int argc, char **argv)
     // Create SLAM system. It initializes all system threads and gets ready to process frames.
 
     bool visualization = true;
-    PLVS2::System pSLAM(argv[1], argv[2], PLVS2::System::STEREO, visualization);
+    PLVS2::System pSLAM(argv[1], argv[2], PLVS2::System::STEREO, visualization); //构造函数初始化了一些线程
 
     auto node = std::make_shared<StereoSlamNode>(&pSLAM, argv[2], argv[3]);
     std::cout << "============================ " << std::endl;

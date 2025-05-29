@@ -82,6 +82,7 @@ Once everything is built, you can enter in the `Scripts` folder and test the dif
 - `$ ./run_tum_vi_stereo_inertial.sh` for TUM VI datasets, stereo + inertial
 
 In each of the above scripts, you have to configure *(1)* the `DATASET_BASE_FOLDER`, *(2)* the specific `DATASET` of interest, and *(3)* the used `YAML` configuration file. In particular, each `YAML` configuration file shows different sections with commented options. For a quick overview of the **new features** and their corresponding `YAML` options refer to [new_features.md](./new_features.md).   
+ros2 run plvs stereo /home/kongdechang/repo/plvs/Vocabulary/ORBvoc.txt /home/kongdechang/repo/plvs/Settings/ros/ruben_stereo.yaml  false
 
 #### ROS 1 
 
@@ -89,9 +90,20 @@ If you built the ROS workspace, you can use the scripts `ros_xterm*` to launch t
 For instance, with the TUM datasets, configure and run `ros_xterm_tum_rgbd.sh`.
 
 #### ROS 2
+在本地terminal输入：xhost +local:docker
 
-Refer to this [README](./Examples/ROS2/PLVS/README.md). At present, this is a work in progress.
-With the TUM datasets, configure and run `ros2_xterm_tum_rgbd.sh`.
+cd ros2_ws
+source install/local_setup.bash
+### rgbd：
+ros2 run plvs rgbd /home/kongdechang/repo/plvs/Vocabulary/ORBvoc.txt /home/kongdechang/repo/plvs/Settings/ros/Orbbec_dcw_ros.yaml 
+### mono：
+ros2 run plvs mono /home/kongdechang/repo/plvs/Vocabulary/ORBvoc.txt /home/kongdechang/repo/plvs/Settings/ros/Orbbec_astra_ros.yaml 
+### stereo:
+ros2 run plvs stereo /home/kongdechang/repo/plvs/Vocabulary/ORBvoc.txt /home/kongdechang/repo/plvs/Settings/ros/Orbbec_astra_stereo_ros.yaml false
+ros2 run plvs stereo /home/kongdechang/repo/plvs/Vocabulary/ORBvoc.txt /home/kongdechang/repo/plvs/Settings/ros/ruben_stereo.yaml  false
+
+# 可视化轨迹：
+~/.local/bin/evo_traj tum KeyFrameTrajectory.txt --plot
 
 **Note**: The ROS1 and ROS2 install paths are automatically detected by the script `Scripts/find_ros.sh`.
 

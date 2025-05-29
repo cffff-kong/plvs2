@@ -272,6 +272,7 @@ Frame::Frame(const cv::Mat &imLeft, const cv::Mat &imRight, const double &timeSt
         invfy = 1.0f/fy;
 
         mbInitialComputations=false;
+        std::cout<<"这里是第一帧"<<std::endl;
     }
 
     mb = mbf/fx; 
@@ -802,14 +803,17 @@ void Frame::AssignFeaturesToGrid()
     
     }
 }
-
+//thread threadLeft(&Frame::ExtractORB,this,0,imLeft,0,0);
+//thread threadRight(&Frame::ExtractORB,this,1,imRight,0,0);
 void Frame::ExtractORB(int flag, const cv::Mat &im, const int x0, const int x1)
 {
     vector<int> vLapping = {x0,x1};
     if(flag==0)
         monoLeft = (*mpORBextractorLeft)(im,cv::Mat(),mvKeys,mDescriptors,vLapping);
+        std::cout<<"左图特征点数量: "<<monoLeft<<std::endl;
     else
         monoRight = (*mpORBextractorRight)(im,cv::Mat(),mvKeysRight,mDescriptorsRight,vLapping);
+        std::cout<<"右图特征点数量: "<<monoRight<<std::endl;
 }
 
 void Frame::ExtractLSD(int flag, const cv::Mat &im)

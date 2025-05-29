@@ -12,15 +12,16 @@ RgbdSlamNode::RgbdSlamNode(std::shared_ptr<PLVS2::System>& pSLAM, bool bWaitForC
     pSLAM_(pSLAM),
     bWaitForCameraInfo_(bWaitForCameraInfo)
 {
-    rgb_sub = std::make_shared<message_filters::Subscriber<ImageMsg> >(shared_ptr<rclcpp::Node>(this), "camera/rgb");   // /camera/rgb/image_raw
-    depth_sub = std::make_shared<message_filters::Subscriber<ImageMsg> >(shared_ptr<rclcpp::Node>(this), "camera/depth"); // camera/depth_registered/image_raw
+    rgb_sub = std::make_shared<message_filters::Subscriber<sensor_msgs::msg::Image>>(this, "/camera_01/color/image_raw");
+    depth_sub = std::make_shared<message_filters::Subscriber<sensor_msgs::msg::Image>>(this, "/camera_01/depth/image_raw");
+    // rgb_sub = std::make_shared<message_filters::Subscriber<ImageMsg> >(shared_ptr<rclcpp::Node>(this), "camera/rgb");   // /camera/rgb/image_raw
+    // depth_sub = std::make_shared<message_filters::Subscriber<ImageMsg> >(shared_ptr<rclcpp::Node>(this), "camera/depth"); // camera/depth_registered/image_raw
 
     syncApproximate = std::make_shared<message_filters::Synchronizer<approximate_sync_policy> >(approximate_sync_policy(10), *rgb_sub, *depth_sub);
     syncApproximate->registerCallback(&RgbdSlamNode::GrabRGBD, this);
-
     if(bWaitForCameraInfo_)
     {
-        info_color_sub = this->create_subscription<sensor_msgs::msg::CameraInfo>("camera/rgb/camera_info", 10, std::bind(&RgbdSlamNode::GrabCameraInfo, this, std::placeholders::_1));
+        info_color_sub = this->create_subscription<sensor_msgs::msg::CameraInfo>("/camera/color/camera_info", 10, std::bind(&RgbdSlamNode::GrabCameraInfo, this, std::placeholders::_1));
         // One-shot timer to handle timeout
         timerWaitCameraInfo = this->create_wall_timer(std::chrono::milliseconds(kTimeOutWaitCameraInfoMs),
             std::bind(&RgbdSlamNode::WaitCameraInfoTimerCallback, this));    

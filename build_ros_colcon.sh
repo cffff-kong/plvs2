@@ -180,6 +180,18 @@ cd $SCRIPT_DIR
 cd ros2_ws
 
 print_blue "compiling with colcon build... "
-CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Release $EXTERNAL_OPTION"  # add "--verbose" option if needed 
+# 防止线程太多导致系统卡死
+NUM_THREADS=$(nproc)
+if [[ $NUM_THREADS -gt 4 ]]; then
+    NUM_THREADS=4  # 限制最大线程数，避免负载过高
+fi
+
+# 最终构建参数组合
+CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Release $EXTERNAL_OPTION"
 OVERRIDING_OPTIONS="--allow-overriding cv_bridge image_geometry"
-colcon build --symlink-install $OVERRIDING_OPTIONS --cmake-args $CMAKE_OPTIONS
+
+colcon build --symlink-install \
+    --cmake-args $CMAKE_OPTIONS \
+    --executor sequential \
+    --parallel-workers $NUM_THREADS
+

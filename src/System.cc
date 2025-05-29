@@ -120,7 +120,7 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
     if(!node.empty() && node.isString() && node.string() == "1.0")
     {
         //settings_ = new Settings(strSettingsFile,mSensor);
-        settings_ = Settings::create(strSettingsFile,mSensor);
+        settings_ = Settings::create(strSettingsFile,mSensor);  //调用Settings的构造函数
 
         mStrLoadAtlasFromFile = settings_->atlasLoadFile();
         mStrSaveAtlasToFile = settings_->atlasSaveFile();
@@ -471,6 +471,7 @@ Sophus::SE3f System::TrackStereo(const cv::Mat &imLeft, const cv::Mat &imRight, 
     }    
 
     cv::Mat imLeftToFeed, imRightToFeed;
+    //needToRectify()返回的bNeedToRectify_在Settings::readCamera2已经设置为true了
     if(settings_ && settings_->needToRectify()){
         const cv::Mat& M1l = settings_->M1l();
         const cv::Mat& M2l = settings_->M2l();
@@ -573,6 +574,8 @@ Sophus::SE3f System::TrackRGBD(const cv::Mat &im, const cv::Mat &depthmap, const
     } 
 
     cv::Mat imToFeed = im.clone();
+cv::cvtColor(imToFeed, imToFeed, cv::COLOR_RGB2BGR);
+
     cv::Mat imDepthToFeed = depthmap.clone();
     if(settings_ && settings_->needToResize()){
         cv::Mat resizedIm;

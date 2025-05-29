@@ -79,4 +79,4 @@ if [ ! -d build ]; then
 fi
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release $EXTERNAL_OPTIONS
-make -j6   # if you use too many threads your will loose the control of your computer for a while 
+make -j4  # if you use too many threads your will loose the control of your computer for a while 

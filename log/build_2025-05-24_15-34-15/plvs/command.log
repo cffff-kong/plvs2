@@ -1,0 +1,2 @@
+Invoking command in '/home/kongdechang/repo/plvs/build/plvs': /usr/bin/cmake /home/kongdechang/repo/plvs -DCMAKE_INSTALL_PREFIX=/home/kongdechang/repo/plvs/install/plvs
+Invoked command in '/home/kongdechang/repo/plvs/build/plvs' returned '-2': /usr/bin/cmake /home/kongdechang/repo/plvs -DCMAKE_INSTALL_PREFIX=/home/kongdechang/repo/plvs/install/plvs

@@ -1,0 +1,179 @@
+%YAML:1.0
+
+#--------------------------------------------------------------------------------------------
+# 视图设置（Viewer 参数）
+#--------------------------------------------------------------------------------------------
+# Viewer.on: 1 表示开启可视化窗口，0 表示关闭
+Viewer.on: 1
+
+Viewer.KeyFrameSize: 0.05               # 关键帧相机在视图中的大小
+Viewer.KeyFrameLineWidth: 1             # 关键帧边界线宽
+Viewer.GraphLineWidth: 0.9              # 连接关键帧图的线宽
+Viewer.PointSize: 1                     # 点云点的大小
+Viewer.LineSize: 1                      # 线段显示的线宽
+Viewer.CameraSize: 0.08                 # 当前相机位姿的显示大小
+Viewer.CameraLineWidth: 3               # 当前相机模型的线宽
+Viewer.ViewpointX: 0                    # 相机初始视角位置 X
+Viewer.ViewpointY: -0.7                 # 相机初始视角位置 Y
+Viewer.ViewpointZ: -1.8                 # 相机初始视角位置 Z
+Viewer.ViewpointF: 500                  # 相机焦距
+
+Viewer.ViewpointYtop: -4.0              # 从上方查看时的 Y 值
+
+#--------------------------------------------------------------------------------------------
+# 相机参数（需根据具体相机进行调整）
+#--------------------------------------------------------------------------------------------
+Camera.type: "PinHole"                  # 相机类型为针孔模型
+
+# 相机内参和畸变参数（OpenCV 格式）
+Camera.fx: 360.05126953125              # 焦距 fx
+Camera.fy: 360.051270                   # 焦距 fy
+Camera.cx: 317.924011                   # 主点 cx
+Camera.cy: 177.785324                   # 主点 cy
+
+Camera.k1: -0.016584                    # 畸变参数 k1
+Camera.k2: 0.002343                     # 畸变参数 k2
+Camera.p1: -0.000024                    # 畸变参数 p1
+Camera.p2: 0.000373                     # 畸变参数 p2
+Camera.k3: 0.000000                     # 畸变参数 k3
+
+Camera.width: 640                       # 图像宽度
+Camera.height: 360                      # 图像高度
+
+Camera.fps: 10.0                        # 相机帧率
+
+Camera.bf: 40.0                        # 红外投影仪基线乘以 fx（约值） 暂时不知道！！！
+
+Camera.RGB: 1                          # 图像颜色顺序（0: BGR，1: RGB；若为灰度图则忽略）
+
+Camera.waitCameraInfoOn: 0            # 是否在开始前等待 CameraInfo 消息（1：等待；0：不等待）
+
+ThDepth: 40.0                           # 近/远深度阈值，基线为基准
+
+DepthMapFactor: 1000.0                     # 深度图缩放因子
+
+
+#--------------------------------------------------------------------------------------------
+# 特征参数
+#--------------------------------------------------------------------------------------------
+
+Features.balanceTotalNumFeatures: 0     # 是否从 ORB 特征中减去线段特征数量
+
+#--------------------------------------------------------------------------------------------
+# ORB 特征提取器参数
+#--------------------------------------------------------------------------------------------
+
+ORBextractor.nFeatures: 1200            # 每帧图像提取的 ORB 特征点数目
+ORBextractor.scaleFactor: 1.2           # 金字塔每层之间的缩放系数
+ORBextractor.nLevels: 8                 # 金字塔层数
+ORBextractor.iniThFAST: 20              # FAST 初始阈值（图像分格子提取角点）
+ORBextractor.minThFAST: 7               # 如果初始阈值下无角点，则使用该较小阈值
+
+#--------------------------------------------------------------------------------------------
+# 线段追踪参数
+#--------------------------------------------------------------------------------------------
+
+Line.on: 1                              # 启用线段功能（1：开启；0：关闭）
+
+Line.nfeatures: 100                     # 线段特征数量（设为 0 表示保留全部线段）
+Line.nLevels: 3                         # 线段金字塔层数
+Line.scaleFactor: 1.2                   # 金字塔缩放比例
+Line.sigma: 2                           # 提取线段的噪声标准差（单位：像素）
+Line.minLineLength: 0.02                # 最小线段长度（相对于图像大小的比例）
+Line.lineTrackWeigth: 2                # 成功/失败匹配中线段对点的权重
+Line.minLineLength3D: 0.01              # 最小3D线段长度（单位：米）
+Line.muWeightForLine3dDist: 0.3         # 线段端点之间距离的权重参数
+
+Line.LSD.on: 0                          # 使用 LSD 线段提取器（比 EDLine 更慢）
+
+#--------------------------------------------------------------------------------------------
+# 平面物体（Map Object）检测设置
+#--------------------------------------------------------------------------------------------
+
+MapObject.on: 0                         # 是否开启平面物体检测
+MapObject.imgs: "teddy.png"             # 用于检测的平面物体图像（多个图像用空格分隔）
+MapObject.numMinInliers: 5             # 最小内点数要求
+MapObject.maxReprojectionError: 1       # 最大重投影误差
+MapObject.maxSim3Error: 0.01            # 最大 Sim3 配准误差
+
+#--------------------------------------------------------------------------------------------
+# 关键帧生成
+#--------------------------------------------------------------------------------------------
+
+KeyFrame.fovCentersBasedGeneration.on: 0    # 是否基于视野中心生成关键帧
+KeyFrame.maxFovCentersDistance: 0.4         # 视野中心最大距离
+
+#--------------------------------------------------------------------------------------------
+# 稀疏地图设置
+#--------------------------------------------------------------------------------------------
+
+SparseMapping.filename: "sparse_map_out_0.map"   # 保存地图的文件名
+SparseMapping.reuseMap: 0                        # 启动时是否加载已有地图
+SparseMapping.freezeMap: 1                       # 优化期间是否冻结地图
+SparseMapping.saveMap: 0                         # 关闭时是否保存地图
+SparseMapping.forceRelocalization: 1             # 强制立即重定位（而不是等待闭环线程）
+
+#--------------------------------------------------------------------------------------------
+# 深度噪声模型
+#--------------------------------------------------------------------------------------------
+
+Depth.sigmaZfactor: 6                            # 深度噪声模型缩放因子
+
+#--------------------------------------------------------------------------------------------
+# 点云建图设置
+#--------------------------------------------------------------------------------------------
+
+PointCloudMapping.on: 1                         # 是否开启点云建图
+
+PointCloudMapping.type: "voxblox"                # 点云建图方法类型（如 voxelgrid、octomap、voxblox 等）
+
+PointCloudMapping.resolution: 0.005              # 地图分辨率
+PointCloudMapping.numKeyframesToQueueBeforeProcessing: 1  # 缓冲关键帧数
+PointCloudMapping.downSampleStep: 2              # 点云下采样步长
+PointCloudMapping.minDepth: 0.1                  # 最小深度值
+PointCloudMapping.maxDepth: 5                    # 最大深度值
+PointCloudMapping.removeUnstablePoints: 1        # 是否移除不稳定点
+
+PointCloudMapping.resetOnSparseMapChange: 1      # 稀疏地图改变时是否重置点云地图
+PointCloudMapping.cloudDeformationOnSparseMapChange: 0  # 地图变化时是否进行云形变（不建议）
+
+PointCloudMapping.pointCounterThreshold: 3       # [octree_point] 模式下点计数阈值
+
+PointCloudMapping.voxbloxIntegrationMethod: "fast"  # [voxblox] 模式下的集成方法
+
+PointCloudMapping.useCarving: 0                  # 是否使用 carving 模式
+
+PointCloudMapping.filterDepth.on: 0              # 是否开启深度滤波
+PointCloudMapping.filterDepth.diameter: 7        # 深度滤波窗口直径
+PointCloudMapping.filterDepth.sigmaDepth: 0.02   # 深度域高斯标准差
+PointCloudMapping.filterDepth.sigmaSpace: 5      # 空间域高斯标准差
+
+PointCloudMapping.loadMap: 0                     # 启动时是否加载密集地图
+PointCloudMapping.loadFilename: "volumetric_map_0.ply"  # 密集地图加载文件名
+
+#--------------------------------------------------------------------------------------------
+# 分割设置
+#--------------------------------------------------------------------------------------------
+
+Segmentation.on: 1                               # 是否开启点云分割（仅适用于 octree_point）
+Segmentation.maxDepth: 2                         # 最大深度
+
+Segmentation.erosionDilationOn: 1                # 是否使用膨胀腐蚀操作
+Segmentation.minFi: 0.92                         # 最小表面一致性 Fi
+Segmentation.maxDelta: 0.01                      # 最大法向量角度变化
+Segmentation.singleDepth.minComponentArea: 80    # 最小区域面积
+Segmentation.lineDrawThinckness: 2               # 分割边界线粗细
+Segmentation.maxAngleForNormalAssociation: 20    # 关联法向量的最大角度
+Segmentation.labelsMatchingMinOverlapPerc: 0.2   # 标签匹配最小重叠比例
+Segmentation.labelsMatchingMinOverlapPoints: 0   # 标签匹配最小重叠点数
+Segmentation.globalLabelsMatchingMinOverlapPerc: 0.2  # 全局标签匹配最小重叠比例
+
+#--------------------------------------------------------------------------------------------
+# OpenGL 静态对象显示设置
+#--------------------------------------------------------------------------------------------
+
+GlObjects.on: 0                                   # 是否开启 GL 静态对象显示
+
+GlObjects.list:
+#  - { filename: "map_0.ply", type: "cloudmesh", pose: [ 0, 0, 0, 0, 0, 0] }  
+#  - { filename: "sassi.ply", type: "cloudmesh", pose: [ 0, 0, 0, 0, 0, 0] }  # 显示预加载的点云地图对象

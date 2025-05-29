@@ -230,3 +230,8 @@ Results/
 
 # Calibration
 Examples/Calibration/recorder-*
+、
+*.png
+*.jpg
+build/
+install/
