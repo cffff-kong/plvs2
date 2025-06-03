@@ -161,6 +161,8 @@ find_package(message_filters REQUIRED)
 #find_package(Sophus REQUIRED)
 #find_package(Pangolin REQUIRED)
 #find_package(ORB_SLAM3 REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(nav_msgs REQUIRED)
 
 
 #====================================
@@ -242,7 +244,7 @@ add_executable(stereo
   src/stereo/stereo.cpp
   src/stereo/stereo-slam-node.cpp
 )
-ament_target_dependencies(stereo rclcpp sensor_msgs cv_bridge message_filters)
+ament_target_dependencies(stereo rclcpp sensor_msgs cv_bridge message_filters geometry_msgs  nav_msgs)
 target_link_libraries(stereo ${LIBS})
 
 add_executable(stereo-inertial

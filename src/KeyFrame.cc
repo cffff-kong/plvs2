@@ -163,7 +163,7 @@ KeyFrame::KeyFrame(Frame &F, Map *pMap, KeyFrameDatabase *pKFDB):
     mbVisited(false), mbFixed(false),   
     mbHasVelocity(false)
 {
-
+    std::cout<<"KeyFrame::KeyFrame 创建新的关键帧"<<std::endl;
     imgLeft = F.imgLeft.clone();
     imgRight = F.imgRight.clone();
 

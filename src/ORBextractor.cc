@@ -1365,6 +1365,7 @@ namespace PLVS2
                 }
 
                 if(keypoint->pt.x >= vLappingArea[0] && keypoint->pt.x <= vLappingArea[1]){
+                    std::cout<<"-----------------------"<<std::endl;
                     _keypoints.at(stereoIndex) = (*keypoint);
                     desc.row(i).copyTo(descriptors.row(stereoIndex));
                     stereoIndex--;

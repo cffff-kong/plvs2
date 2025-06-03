@@ -2229,6 +2229,7 @@ void Tracking::Track()
     {
         if(mSensor==System::STEREO || mSensor==System::RGBD || mSensor==System::IMU_STEREO || mSensor==System::IMU_RGBD)
         {
+            // 判断当前帧关键点个数，创建新关键帧，三角化建图
             StereoInitialization();
         }
         else
@@ -2259,6 +2260,7 @@ void Tracking::Track()
 #endif
 
         // Initial camera pose estimation using motion model or relocalization (if tracking is lost)
+        // 如果不只是定位，还有建图
         if(!mbOnlyTracking)
         {
             /// < SLAM Mode: Local Mapping is active
@@ -2266,7 +2268,7 @@ void Tracking::Track()
             // State OK
             // Local Mapping is activated. This is the normal behaviour, unless
             // you explicitly activate the "only tracking" mode.
-            if(mState==OK)
+            if(mState==OK) //初始化成功会赋值为OK
             {
 
                 // Local Mapping might have changed some Map features tracked in last frame
@@ -2767,7 +2769,7 @@ void Tracking::Track()
 void Tracking::StereoInitialization()
 {
     const int numMinFeaturesForInit = (mSensor==System::RGBD)? skNumMinFeaturesRGBDInitialization : skNumMinFeaturesStereoInitialization;
-    
+    std::cout << "双目初始化需要" << numMinFeaturesForInit<< " features" << std::endl;
     if( (mCurrentFrame.N + mCurrentFrame.Nlines) > numMinFeaturesForInit)
     {
         if (mSensor == System::IMU_STEREO || mSensor == System::IMU_RGBD)
@@ -2801,7 +2803,7 @@ void Tracking::StereoInitialization()
             mCurrentFrame.SetImuPoseVelocity(Rwb0, twb0, Vwb0);
         }
         else
-            mCurrentFrame.SetPose(Sophus::SE3f());
+            mCurrentFrame.SetPose(Sophus::SE3f());  //设置初始位姿为零
 
         // Create KeyFrame
         //KeyFrame* pKFini = new KeyFrame(mCurrentFrame,mpAtlas->GetCurrentMap(),mpKeyFrameDB);
@@ -2865,7 +2867,7 @@ void Tracking::StereoInitialization()
 #endif                  
 
         } else{
-
+            // 三角化建图
             if(mCurrentFrame.Nright>0)
             for(int i = 0; i < mCurrentFrame.Nleft; i++){
                 int rightIndex = mCurrentFrame.mvLeftToRightMatch[i];
@@ -2953,7 +2955,9 @@ void Tracking::StereoInitialization()
         mpMapDrawer->SetCurrentCameraPose(mCurrentFrame.GetPose());
 
         mState=OK;
+        std::cout<<"初始化完成！！！！！！"<<std::endl;
     }
+    std::cout<<"初始化的点数不够，数量为："<< mCurrentFrame.N + mCurrentFrame.Nlines << std::endl;
 }
 
 

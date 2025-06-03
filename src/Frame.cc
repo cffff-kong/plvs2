@@ -312,6 +312,7 @@ Frame::Frame(const cv::Mat &imLeft, const cv::Mat &imRight, const double &timeSt
 #endif         
         
         // ORB extraction
+        std::cout<<"提取ORB特征点..."<<std::endl;
         thread threadLeft(&Frame::ExtractORB,this,0,imLeft,0,0);
         thread threadRight(&Frame::ExtractORB,this,1,imRight,0,0);     
         // Line extraction
@@ -1792,7 +1793,200 @@ void Frame::ComputeImageBounds(const cv::Mat &imLeft)
     }
     mnMaxDiag = sqrt( pow(mnMaxX-mnMinX,2) + pow(mnMaxY-mnMinY,2) );
 }
+//列匹配
+// void Frame::ComputeStereoMatches()
+// {
+//     mvuRight = vector<float>(N, -1.0f);
+//     mvDepth = vector<float>(N, -1.0f);
 
+//     mMedianDepth = KeyFrame::skFovCenterDistance;
+
+//     const int thOrbDist = (ORBmatcher::TH_HIGH + ORBmatcher::TH_LOW) / 2;
+
+//     const int nCols = mpORBextractorLeft->mvImagePyramid[0].cols;
+
+//     // 按列索引右图关键点
+//     vector<vector<size_t>> vColIndices(nCols, vector<size_t>());
+//     for (int i = 0; i < nCols; i++)
+//         vColIndices[i].reserve(200);
+
+//     const int Nr = mvKeysRight.size();
+
+//     for (int iR = 0; iR < Nr; iR++)
+//     {
+//         const cv::KeyPoint &kp = mvKeysRight[iR];
+//         const float &kpX = kp.pt.x;
+//         const float r = 2.0f * mvScaleFactors[mvKeysRight[iR].octave];
+//         const int maxc = ceil(kpX + r);
+//         const int minc = floor(kpX - r);
+
+//         for (int xi = minc; xi <= maxc; xi++)
+//         {
+//             if (xi >= 0 && xi < nCols)
+//                 vColIndices[xi].push_back(iR);
+//         }
+//     }
+
+//     const float minZ = mb;
+//     const float minD = 0;
+//     const float maxD = mbf / minZ;
+
+//     vector<pair<int, int>> vDistIdx;
+//     vDistIdx.reserve(N);
+
+//     for (int iL = 0; iL < N; iL++)
+//     {
+//         const cv::KeyPoint &kpL = mvKeys[iL];
+//         const int &levelL = kpL.octave;
+//         const float &uL = kpL.pt.x;
+//         const float &vL = kpL.pt.y;
+
+//         const int colIdx = cvRound(uL);
+//         if (colIdx < 0 || colIdx >= nCols)
+//             continue;
+
+//         const vector<size_t> &vCandidates = vColIndices[colIdx];
+//         if (vCandidates.empty())
+//             continue;
+
+//         const float minV = vL - maxD;
+//         const float maxV = vL - minD;
+//         if (maxV < 0)
+//             continue;
+
+//         int bestDist = ORBmatcher::TH_HIGH;
+//         size_t bestIdxR = 0;
+
+//         const cv::Mat &dL = mDescriptors.row(iL);
+
+//         for (size_t iC = 0; iC < vCandidates.size(); iC++)
+//         {
+//             const size_t iR = vCandidates[iC];
+//             const cv::KeyPoint &kpR = mvKeysRight[iR];
+
+//             if (kpR.octave < levelL - 1 || kpR.octave > levelL + 1)
+//                 continue;
+
+//             const float &vR = kpR.pt.y;
+
+//             if (vR >= minV && vR <= maxV)
+//             {
+//                 const cv::Mat &dR = mDescriptorsRight.row(iR);
+//                 const int dist = ORBmatcher::DescriptorDistance(dL, dR);
+
+//                 if (dist < bestDist)
+//                 {
+//                     bestDist = dist;
+//                     bestIdxR = iR;
+//                 }
+//             }
+//         }
+
+//         if (bestDist < thOrbDist)
+//         {
+//             const float vR0 = mvKeysRight[bestIdxR].pt.y;
+//             const float scaleFactor = mvInvScaleFactors[kpL.octave];
+//             const float scaleduL = round(kpL.pt.x * scaleFactor);
+//             const float scaledvL = round(kpL.pt.y * scaleFactor);
+//             const float scaledvR0 = round(vR0 * scaleFactor);
+
+//             const int w = 5;
+
+// #ifdef USE_CUDA
+//             cv::cuda::GpuMat gMat = mpORBextractorLeft->mvImagePyramid[kpL.octave]
+//                                         .rowRange(scaledvL - w, scaledvL + w + 1)
+//                                         .colRange(scaleduL - w, scaleduL + w + 1);
+//             cv::Mat IL(gMat.rows, gMat.cols, gMat.type(), gMat.data, gMat.step);
+// #else
+//             cv::Mat IL = mpORBextractorLeft->mvImagePyramid[kpL.octave]
+//                              .rowRange(scaledvL - w, scaledvL + w + 1)
+//                              .colRange(scaleduL - w, scaleduL + w + 1);
+// #endif
+
+//             int bestDist = INT_MAX;
+//             int bestincV = 0;
+//             const int L = 5;
+//             vector<float> vDists(2 * L + 1);
+
+//             const float iniV = scaledvR0 + L - w;
+//             const float endV = scaledvR0 + L + w + 1;
+//             if (iniV < 0 || endV >= mpORBextractorRight->mvImagePyramid[kpL.octave].rows)
+//                 continue;
+
+//             for (int incV = -L; incV <= +L; incV++)
+//             {
+// #ifdef USE_CUDA
+//                 cv::cuda::GpuMat gMat = mpORBextractorRight->mvImagePyramid[kpL.octave]
+//                                             .rowRange(scaledvR0 + incV - w, scaledvR0 + incV + w + 1)
+//                                             .colRange(scaleduL - w, scaleduL + w + 1);
+//                 cv::Mat IR(gMat.rows, gMat.cols, gMat.type(), gMat.data, gMat.step);
+// #else
+//                 cv::Mat IR = mpORBextractorRight->mvImagePyramid[kpL.octave]
+//                                  .rowRange(scaledvR0 + incV - w, scaledvR0 + incV + w + 1)
+//                                  .colRange(scaleduL - w, scaleduL + w + 1);
+// #endif
+//                 float dist = cv::norm(IL, IR, cv::NORM_L1);
+//                 if (dist < bestDist)
+//                 {
+//                     bestDist = dist;
+//                     bestincV = incV;
+//                 }
+
+//                 vDists[L + incV] = dist;
+//             }
+
+//             if (bestincV == -L || bestincV == L)
+//                 continue;
+
+//             const float dist1 = vDists[L + bestincV - 1];
+//             const float dist2 = vDists[L + bestincV];
+//             const float dist3 = vDists[L + bestincV + 1];
+
+//             const float deltaV = (dist1 - dist3) / (2.0f * (dist1 + dist3 - 2.0f * dist2));
+//             if (deltaV < -1 || deltaV > 1)
+//                 continue;
+
+//             float bestvR = mvScaleFactors[kpL.octave] * ((float)scaledvR0 + (float)bestincV + deltaV);
+
+//             float disparity = (vL - bestvR);
+//             if (disparity >= minD && disparity < maxD)
+//             {
+//                 if (disparity <= 0)
+//                 {
+//                     disparity = 0.01f;
+//                     bestvR = vL - 0.01f;
+//                 }
+
+//                 mvDepth[iL] = mbf / disparity;
+//                 mvuRight[iL] = bestvR;
+//                 vDistIdx.push_back(pair<int, int>(bestDist, iL));
+//             }
+//         }
+//     }
+
+//     std::cout << "有" << vDistIdx.size() << "个立体匹配点" << std::endl;
+
+//     sort(vDistIdx.begin(), vDistIdx.end());
+//     const float median = vDistIdx[vDistIdx.size() / 2].first;
+//     const float thDist = 1.5f * 1.4f * median;
+
+//     for (int i = vDistIdx.size() - 1; i >= 0; i--)
+//     {
+//         if (vDistIdx[i].first < thDist)
+//             break;
+//         else
+//         {
+//             mvuRight[vDistIdx[i].second] = -1;
+//             mvDepth[vDistIdx[i].second] = -1;
+//         }
+//     }
+
+//     if (mbUseFovCentersKfGenCriterion)
+//     {
+//         mMedianDepth = ComputeSceneMedianDepth();
+//     }
+// }
+//行匹配
 void Frame::ComputeStereoMatches()
 {
     mvuRight = vector<float>(N,-1.0f);
