@@ -22,6 +22,7 @@ namespace DBoW2 {
 
 /// Vector of nodes with indexes of local features
 class FeatureVector: 
+  //NodeId-节点id，std::vector<unsigned int> -当前node下的特征点索引
   public std::map<NodeId, std::vector<unsigned int> >
 {
 //    friend class boost::serialization::access;

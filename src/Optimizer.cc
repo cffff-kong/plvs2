@@ -2378,7 +2378,7 @@ int Optimizer::PoseOptimization(Frame *pFrame)
 #if VERBOSE_POSE_OPTIMIZATION
     std::cout << "Optimizer::PoseOptimization() " << std::endl; 
 #endif  
-
+    // Step 1：这里先构造了g2o稀疏优化器, BlockSolver_6_3表示：位姿为6维，路标点是3维
     g2o::SparseOptimizer optimizer;
     g2o::OptimizationAlgorithmLevenberg* solver;
         
@@ -2425,24 +2425,24 @@ int Optimizer::PoseOptimization(Frame *pFrame)
     solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);    
 #endif // USE_LINES_POSE_OPTIMIZATION
 
-    optimizer.setAlgorithm(solver);
+    optimizer.setAlgorithm(solver); //设置求解器
 
     int nInitialCorrespondences=0;
     int nInitialLineCorrespondences=0;
-
+    // Step 2：添加顶点：待优化当前帧的位姿
     // Set Frame vertex
     g2o::VertexSE3Expmap * vSE3 = new g2o::VertexSE3Expmap();
-    Sophus::SE3<float> Tcw = pFrame->GetPose();
-    vSE3->setEstimate(g2o::SE3Quat(Tcw.unit_quaternion().cast<double>(),Tcw.translation().cast<double>()));
+    Sophus::SE3<float> Tcw = pFrame->GetPose(); //当前帧的位姿，其实是上一帧的位姿，拿来做优化的初始位姿
+    vSE3->setEstimate(g2o::SE3Quat(Tcw.unit_quaternion().cast<double>(),Tcw.translation().cast<double>())); //转换成四元数和位移的形式
     vSE3->setId(0);
     vSE3->setFixed(false);
-    optimizer.addVertex(vSE3);
+    optimizer.addVertex(vSE3); //添加顶点到优化器中
     
     //g2o::OptimizableGraph::Vertex* vertexSE3 = dynamic_cast<g2o::OptimizableGraph::Vertex*>(optimizer.vertex(0));   
 
     // Set MapPoint vertices
     const int N = pFrame->N;
-
+    //用于存储 单目观测残差边（只优化相机位姿,不优化地图点）
     vector<PLVS2::EdgeSE3ProjectXYZOnlyPose*> vpEdgesMono;
     vector<PLVS2::EdgeSE3ProjectXYZOnlyPoseToBody *> vpEdgesMono_FHR;
     vector<size_t> vnIndexEdgeMono, vnIndexEdgeRight;
@@ -2492,6 +2492,7 @@ int Optimizer::PoseOptimization(Frame *pFrame)
     unique_lock<mutex> lock(MapPoint::mGlobalMutex);
 
     // start points 
+    // 设置基于关键点的图优化器
     for(int i=0; i<N; i++)
     {
         MapPointPtr pMP = pFrame->mvpMapPoints[i];
@@ -2893,7 +2894,7 @@ int Optimizer::PoseOptimization(Frame *pFrame)
 
     } // end lock MapLine::mGlobalMutex
 
-
+    // 如果没有足够的匹配点,那么就只好放弃了
     if(nInitialCorrespondences + Tracking::sknLineTrackWeigth * nInitialLineCorrespondences < 3)
     {
         std::cout << "Optimizer::PoseOptimization() not enough correspondences " << std::endl; 
@@ -2910,17 +2911,21 @@ int Optimizer::PoseOptimization(Frame *pFrame)
 
     int nBad=0;
     int nBadLines = 0; 
+    // 进行四次优化
     for(size_t it=0; it<4; it++)
     {
         Tcw = pFrame->GetPose();
+        // 这里进行了重投影误差的计算
         vSE3->setEstimate(g2o::SE3Quat(Tcw.unit_quaternion().cast<double>(),Tcw.translation().cast<double>()));
 
         optimizer.initializeOptimization(0);
+        // 开始优化10次
         optimizer.optimize(its[it]);
 
         nBad=0;
         nBadLines = 0;
-        
+        // 优化结束
+
         // points  mono 
         for(size_t i=0, iend=vpEdgesMono.size(); i<iend; i++)
         {

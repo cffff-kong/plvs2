@@ -403,9 +403,9 @@ void Tracking::PrintTimeStats()
     f << " TIME STATS in ms (mean$\\pm$std)" << std::endl;
     cout << "OpenCV version: " << CV_VERSION << endl;
     f << "OpenCV version: " << CV_VERSION << endl;
-    std::cout << "---------------------------" << std::endl;
+    std::cout << "----Tracking-----------------------" << std::endl;
     std::cout << "Tracking" << std::setprecision(5) << std::endl << std::endl;
-    f << "---------------------------" << std::endl;
+    f << "-----------Tracking----------------" << std::endl;
     f << "Tracking" << std::setprecision(5) << std::endl << std::endl;
     double average, deviation;
     if(!vdRectStereo_ms.empty())
@@ -2096,6 +2096,7 @@ void Tracking::ResetFrameIMU()
 
 void Tracking::Track()
 {
+    std::cout << "Tracking::Track() - frame id " << mCurrentFrame.mnId << std::endl;
 #if 0    
     std::cout << "Tracking::Track() - frame id " << mCurrentFrame.mnId << endl;
 #endif 
@@ -2114,7 +2115,7 @@ void Tracking::Track()
         mpSystem->ResetActiveMap();
         return;
     }
-
+    // 取出当前可用的active map
     Map* pCurrentMap = mpAtlas->GetCurrentMap();
     if(!pCurrentMap)
     {
@@ -2123,6 +2124,7 @@ void Tracking::Track()
 
     if(mState!=NO_IMAGES_YET)
     {
+        // 时间戳错乱了
         if(mLastFrame.mTimeStamp>mCurrentFrame.mTimeStamp)
         {
             cerr << "ERROR: Frame with a timestamp older than previous frame detected!" << endl;
@@ -2131,6 +2133,7 @@ void Tracking::Track()
             CreateMapInAtlas();
             return;
         }
+        // 時間戳跳跃了
         else if(mCurrentFrame.mTimeStamp>mLastFrame.mTimeStamp+1.0)
         {
             // cout << mCurrentFrame.mTimeStamp << ", " << mLastFrame.mTimeStamp << endl;
@@ -2227,6 +2230,7 @@ void Tracking::Track()
     //初始化咯
     if(mState==NOT_INITIALIZED)
     {
+        std::cout << "------------------开始初始化---------------"<< std::endl;
         if(mSensor==System::STEREO || mSensor==System::RGBD || mSensor==System::IMU_STEREO || mSensor==System::IMU_RGBD)
         {
             // 判断当前帧关键点个数，创建新关键帧，三角化建图
@@ -2236,7 +2240,7 @@ void Tracking::Track()
         {
             MonocularInitialization();  /// < TODO: integrate line initialization ?
         }
-
+        // 更新绘图
         mpFrameDrawer->Update(this);  // Luigi: enabled back in order to visualize the image flow even when tracking is not OK
 
         if(mState!=OK) // If rightly initialized, mState=OK
@@ -2252,6 +2256,7 @@ void Tracking::Track()
     }
     else
     {
+        // 初始化好了就开始跟踪了
         // System is initialized. Track Frame.
         bool bOK;
 
@@ -2272,15 +2277,20 @@ void Tracking::Track()
             {
 
                 // Local Mapping might have changed some Map features tracked in last frame
+                // 更新Local Mapping里的MapPoints
                 CheckReplacedInLastFrame(); /// < OKL
 
                 if((!mbVelocity && !pCurrentMap->isImuInitialized()) || mCurrentFrame.mnId<mnLastRelocFrameId+2)
                 {
+                    //如果 没有帧间速度且当前帧IMU没有初始化，或者刚完成重定位，则与KeyFrame进行帧间匹配
                     Verbose::PrintMess("TRACK: Track with respect to the reference KF ", Verbose::VERBOSITY_DEBUG);
+                    //和关键帧匹配求解当前帧位姿
+                    std::cout << "TRACK: Track with respect to the reference KF " << std::endl;
                     bOK = TrackReferenceKeyFrame(); /// < OKL
                 }
                 else
                 {
+                    std::cout << "TRACK: Track with motion model" << std::endl;
                     Verbose::PrintMess("TRACK: Track with motion model", Verbose::VERBOSITY_DEBUG);
                     bOK = TrackWithMotionModel();  /// < OKL
                     if(!bOK)
@@ -2295,6 +2305,7 @@ void Tracking::Track()
                     {
                         mState = LOST;
                     }
+                    // 如果当前地图关键帧足够多，则可以尝试重新定位
                     else if(pCurrentMap->KeyFramesInMap()>10)
                     {
                         // cout << "KF in map: " << pCurrentMap->KeyFramesInMap() << endl;
@@ -2313,8 +2324,9 @@ void Tracking::Track()
                 if (mState == RECENTLY_LOST)
                 {
                     Verbose::PrintMess("Lost for a short time", Verbose::VERBOSITY_NORMAL);
-
+                    std::cout << "暂时跟丢了" << std::endl;
                     bOK = true;
+                    // VI
                     if((mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO || mSensor == System::IMU_RGBD))
                     {
                         if(pCurrentMap->isImuInitialized())
@@ -2326,20 +2338,24 @@ void Tracking::Track()
                         {
                             mState = LOST;
                             Verbose::PrintMess("Track Lost...", Verbose::VERBOSITY_NORMAL);
+                            std::cout << "彻底跟丢了" << std::endl;
                             bOK=false;
                         }
                     }
+                    // 纯视觉
                     else
                     {
                         // Relocalization
-                        bOK = Relocalization();
-                        //std::cout << "mCurrentFrame.mTimeStamp:" << to_string(mCurrentFrame.mTimeStamp) << std::endl;
-                        //std::cout << "mTimeStampLost:" << to_string(mTimeStampLost) << std::endl;
-                        if(mCurrentFrame.mTimeStamp-mTimeStampLost>3.0f && !bOK)
+                        bOK = Relocalization(); // 把匹配的范围放宽到地图的词袋而非仅仅上一帧的词袋
+                        // std::cout << "mCurrentFrame.mTimeStamp:" << to_string(mCurrentFrame.mTimeStamp) << std::endl;
+                        // std::cout << "mTimeStampLost:" << to_string(mTimeStampLost) << std::endl;
+                        if (mCurrentFrame.mTimeStamp - mTimeStampLost > 3.0f && !bOK)
                         {
                             mState = LOST;
+                            std::cout << "彻底跟丢了" << std::endl;
+
                             Verbose::PrintMess("Track Lost...", Verbose::VERBOSITY_NORMAL);
-                            bOK=false;
+                            bOK = false;
                         }
                     }
                 }
@@ -2347,12 +2363,17 @@ void Tracking::Track()
                 {
 
                     Verbose::PrintMess("A new map is started...", Verbose::VERBOSITY_NORMAL);
+                    std::cout << "彻底跟丢了" << std::endl;
 
+                    // 关键点过少就重置当前地图
                     if (pCurrentMap->KeyFramesInMap()<10)
                     {
+                        std::cout<<"关键点过少，重置当前地图"<<std::endl;
                         mpSystem->ResetActiveMap();
                         Verbose::PrintMess("Resetting current map...", Verbose::VERBOSITY_NORMAL);
                     }else
+                    // 如果当前地图关键帧足够多，则重新创建一个地图
+                        std::cout<<"创建新地图"<<std::endl;
                         CreateMapInAtlas();
 
                     if(mpLastKeyFrame)
@@ -2769,7 +2790,7 @@ void Tracking::Track()
 void Tracking::StereoInitialization()
 {
     const int numMinFeaturesForInit = (mSensor==System::RGBD)? skNumMinFeaturesRGBDInitialization : skNumMinFeaturesStereoInitialization;
-    std::cout << "双目初始化需要" << numMinFeaturesForInit<< " features" << std::endl;
+    std::cout << "立体初始化需要" << numMinFeaturesForInit<< " features" << std::endl;
     if( (mCurrentFrame.N + mCurrentFrame.Nlines) > numMinFeaturesForInit)
     {
         if (mSensor == System::IMU_STEREO || mSensor == System::IMU_RGBD)
@@ -2957,7 +2978,10 @@ void Tracking::StereoInitialization()
         mState=OK;
         std::cout<<"初始化完成！！！！！！"<<std::endl;
     }
+    else{
     std::cout<<"初始化的点数不够，数量为："<< mCurrentFrame.N + mCurrentFrame.Nlines << std::endl;
+
+    }
 }
 
 
@@ -3301,8 +3325,10 @@ void Tracking::CheckReplacedInLastFrame()
 
 bool Tracking::TrackReferenceKeyFrame()
 {
+    //std::cout<<"111111111111111"<<std::endl;
     std::cout << "Tracking::TrackReferenceKeyFrame()" << std::endl; 
     // Compute Bag of Words vector
+    //将当前帧的 ORB 描述子转换为词袋向量
     mCurrentFrame.ComputeBoW();
 
     // We perform first an ORB matching with the reference keyframe
@@ -3310,6 +3336,17 @@ bool Tracking::TrackReferenceKeyFrame()
     ORBmatcher matcher(0.7,true);
     vector<MapPointPtr> vpMapPointMatches;
 
+    // 找到参考关键帧的地图点与当前帧的匹配点
+    // 对应的匹配点存在vpMapPointMatches
+    //  图像 → 特征提取（Keypoints） → 描述子（Descriptors）
+    //                             ↓
+    //                      词袋模型（聚类/量化）
+    //                             ↓
+    //      每个描述子 → 映射到最近的 视觉词 NodeId
+    //                             ↓
+    //        构建 BoW 表达 + FeatureVector:
+    //           - NodeId → vector<特征点索引>
+    // 通过词袋模型找到同一node下的点，然后遍历这些点求解基于描述子的匹配点
     int nmatches = matcher.SearchByBoW(mpReferenceKF,mCurrentFrame,vpMapPointMatches);
 
     //if(nmatches<15)
@@ -3349,9 +3386,11 @@ bool Tracking::TrackReferenceKeyFrame()
 
 
     // cout << " TrackReferenceKeyFrame mLastFrame.mTcw:  " << mLastFrame.mTcw << endl;
+    // 3D-2D 重投影求位姿 新的位姿存到mCurrentFrame->GetPose()
     Optimizer::PoseOptimization(&mCurrentFrame);
 
     // Discard outliers
+    // 剔除地图点中的外点
     int nmatchesMap = 0;
     for(int i =0; i<mCurrentFrame.N; i++)
     {
@@ -3769,8 +3808,9 @@ bool Tracking::TrackLocalMap()
     // We retrieve the local map and try to find matches to points and lines in the local map.
 
     mTrackedFr++;
-
+    //把当前帧的局部关键帧 mvpLocalKeyFrames 和局部地图点 mvpLocalMapPoints找出来
     UpdateLocalMap();
+    //筛选局部地图中新增的在视野范围内的地图点，投影到当前帧搜索匹配，得到更多的匹配关系
     SearchLocalPoints();
     if(mbLineTrackerOn)
         SearchLocalLines();
@@ -3792,26 +3832,30 @@ bool Tracking::TrackLocalMap()
     int inliers;
     if (!mpAtlas->isImuInitialized())
     {
+        // IMU没有初始化，只优化位姿
         Optimizer::PoseOptimization(&mCurrentFrame);
     }
     else
     {
+        // 如果刚刚重定位过，或者当前帧的ID小于重定位帧ID+mnFramesToResetIMU，则只优化位姿
         if(mCurrentFrame.mnId<=mnLastRelocFrameId+mnFramesToResetIMU)
         {
             Verbose::PrintMess("TLM: PoseOptimization ", Verbose::VERBOSITY_DEBUG);
             Optimizer::PoseOptimization(&mCurrentFrame);
         }
-        else
+        else // 如果积累的IMU数据量比较多，考虑使用IMU数据优化
         {
             // if(!mbMapUpdated && mState == OK) //  && (mnMatchesInliers>30))
-            if(!mbMapUpdated) //  && (mnMatchesInliers>30))
+            if (!mbMapUpdated) //  && (mnMatchesInliers>30))
             {
                 Verbose::PrintMess("TLM: PoseInertialOptimizationLastFrame ", Verbose::VERBOSITY_DEBUG);
+                // 使用上一普通帧以及当前帧的视觉信息和IMU信息联合优化当前帧位姿、速度和IMU零偏
                 inliers = Optimizer::PoseInertialOptimizationLastFrame(&mCurrentFrame); // , !mpLastKeyFrame->GetMap()->GetIniertialBA1());
             }
             else
             {
                 Verbose::PrintMess("TLM: PoseInertialOptimizationLastKeyFrame ", Verbose::VERBOSITY_DEBUG);
+                // 使用上一关键帧以及当前帧的视觉信息和IMU信息联合优化当前帧位姿、速度和IMU零偏
                 inliers = Optimizer::PoseInertialOptimizationLastKeyFrame(&mCurrentFrame); // , !mpLastKeyFrame->GetMap()->GetIniertialBA1());
             }
         }
@@ -3964,6 +4008,7 @@ bool Tracking::NeedNewKeyFrame()
         return false;
     }
 
+    // 获取当前地图中的关键帧数目
     const int nKFs = mpAtlas->KeyFramesInMap();
 
     // Do not insert keyframes if not enough frames have passed from last relocalisation
@@ -3973,6 +4018,10 @@ bool Tracking::NeedNewKeyFrame()
     }
 
     // Tracked MapPoints in the reference keyframe
+    // Step 4：得到参考关键帧跟踪到的地图点数量
+    // UpdateLocalKeyFrames 函数中会将与当前关键帧共视程度最高的关键帧设定为当前帧的参考关键帧
+
+    // 地图点的最小观测次数
     int nMinObs = 3;
     if(nKFs<=2)
         nMinObs=2;
@@ -3994,6 +4043,7 @@ bool Tracking::NeedNewKeyFrame()
     //bool bLocalMappingIdle = mpLocalMapper->AcceptKeyFrames();
 
     // Check how many "close" points and lines are being tracked and how many could be potentially created.
+    // Step 6：对于双目或RGBD摄像头，统计成功跟踪的近点的数量，如果跟踪到的近点太少，没有跟踪到的近点较多，可以插入关键帧
     int nPointsNonTrackedClose = 0;
     int nPointsTrackedClose= 0;    
     int nLinesNonTrackedClose = 0;
@@ -4001,6 +4051,7 @@ bool Tracking::NeedNewKeyFrame()
 
     if(mSensor!=System::MONOCULAR && mSensor!=System::IMU_MONOCULAR)
     {
+        // 判断点的深度是否小于阈值
         int N = (mCurrentFrame.Nleft == -1) ? mCurrentFrame.N : mCurrentFrame.Nleft;
         for(int i =0; i<N; i++)
         {
@@ -4033,12 +4084,15 @@ bool Tracking::NeedNewKeyFrame()
         }        
 #endif
     }
-
+    // 双目或RGBD情况下：跟踪到的地图点中近点太少 同时 没有跟踪到的三维点太多，可以插入关键帧了
+    // 单目时，为false
     const int nFeaturesTrackedClose    = nPointsTrackedClose + Tracking::sknLineTrackWeigth*nLinesTrackedClose;
     const int nFeaturesNonTrackedClose = nPointsNonTrackedClose + Tracking::sknLineTrackWeigth*nLinesNonTrackedClose;
     bool bNeedToInsertClose = (  nFeaturesTrackedClose < 100 ) &&   // not enough tracked close features 
                               (  nFeaturesNonTrackedClose > 70 );   // enough close features which could be potentially tracked
-
+    // Step 7：决策是否需要插入关键帧
+    // Thresholds
+    // Step 7.1：设定比例阈值，当前帧和参考关键帧跟踪到点的比例，比例越大，越倾向于增加关键帧
     // Thresholds
     float thRefRatio = 0.75f;
     if(nKFs<2)
@@ -4587,6 +4641,7 @@ void Tracking::SearchLocalLines()
 void Tracking::UpdateLocalMap()
 {
     // This is for visualization
+    // 设置参考地图点用于绘图显示局部地图点（红色）
     mpAtlas->SetReferenceMapPoints(mvpLocalMapPoints);
     
     if(mbLineTrackerOn)
@@ -4878,7 +4933,8 @@ void Tracking::UpdateLocalKeyFrames()
 /// < TODO: add line processing here 
 bool Tracking::Relocalization()
 {
-    Verbose::PrintMess("Starting relocalization", Verbose::VERBOSITY_NORMAL);
+    std::cout<< "Tracking::Relocalization() - start" << std::endl;
+    //Verbose::PrintMess("Starting relocalization", Verbose::VERBOSITY_NORMAL);
     // Compute Bag of Words Vector
     mCurrentFrame.ComputeBoW();
 

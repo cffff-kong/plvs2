@@ -12,8 +12,10 @@ RgbdSlamNode::RgbdSlamNode(std::shared_ptr<PLVS2::System>& pSLAM, bool bWaitForC
     pSLAM_(pSLAM),
     bWaitForCameraInfo_(bWaitForCameraInfo)
 {
-    rgb_sub = std::make_shared<message_filters::Subscriber<sensor_msgs::msg::Image>>(this, "/camera_01/color/image_raw");
-    depth_sub = std::make_shared<message_filters::Subscriber<sensor_msgs::msg::Image>>(this, "/camera_01/depth/image_raw");
+    // rgb_sub = std::make_shared<message_filters::Subscriber<sensor_msgs::msg::Image>>(this, "/ruben/left/image_raw");
+    // depth_sub = std::make_shared<message_filters::Subscriber<sensor_msgs::msg::Image>>(this, "/ruben/depth/image_raw");
+    rgb_sub = std::make_shared<message_filters::Subscriber<sensor_msgs::msg::Image>>(this, "/camera/color/image_raw");
+    depth_sub = std::make_shared<message_filters::Subscriber<sensor_msgs::msg::Image>>(this, "/camera/depth/image_raw");
     // rgb_sub = std::make_shared<message_filters::Subscriber<ImageMsg> >(shared_ptr<rclcpp::Node>(this), "camera/rgb");   // /camera/rgb/image_raw
     // depth_sub = std::make_shared<message_filters::Subscriber<ImageMsg> >(shared_ptr<rclcpp::Node>(this), "camera/depth"); // camera/depth_registered/image_raw
 

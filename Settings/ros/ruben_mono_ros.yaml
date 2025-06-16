@@ -26,21 +26,22 @@ Viewer.ViewpointYtop: -4.0              # 从上方查看时的 Y 值
 Camera.type: "PinHole"                  # 相机类型为针孔模型
 
 # 相机内参和畸变参数（OpenCV 格式）
-Camera.fx: 360.05126953125              # 焦距 fx
-Camera.fy: 360.051270                   # 焦距 fy
-Camera.cx: 317.924011                   # 主点 cx
-Camera.cy: 177.785324                   # 主点 cy
+Camera.fx: 1582.56
+Camera.fy: 1582.61
+Camera.cx: 749.662
+Camera.cy: 557.123
 
-Camera.k1: -0.016584                    # 畸变参数 k1
-Camera.k2: 0.002343                     # 畸变参数 k2
-Camera.p1: -0.000024                    # 畸变参数 p1
-Camera.p2: 0.000373                     # 畸变参数 p2
-Camera.k3: 0.000000                     # 畸变参数 k3
+Camera.k1: -0.097264
+Camera.k2: 0.162685
+Camera.p1: -0.0528372
+Camera.p2: 0.000358537
+Camera.k3: 0.000269397
+Camera.bFishEye: 0
 
-Camera.width: 640                       # 图像宽度
-Camera.height: 360                      # 图像高度
+Camera.width: 1440
+Camera.height: 1080
 
-Camera.fps: 10.0                        # 相机帧率
+Camera.fps: 10                       # 相机帧率
 
 Camera.bf: 40.0                        # 红外投影仪基线乘以 fx（约值） 暂时不知道！！！
 
@@ -50,7 +51,7 @@ Camera.waitCameraInfoOn: 0            # 是否在开始前等待 CameraInfo 消�
 
 ThDepth: 40.0                           # 近/远深度阈值，基线为基准
 
-DepthMapFactor: 1000.0                     # 深度图缩放因子
+DepthMapFactor: 1.0                     # 深度图缩放因子
 
 
 #--------------------------------------------------------------------------------------------
@@ -63,11 +64,11 @@ Features.balanceTotalNumFeatures: 0     # 是否从 ORB 特征中减去线段特
 # ORB 特征提取器参数
 #--------------------------------------------------------------------------------------------
 
-ORBextractor.nFeatures: 1200            # 每帧图像提取的 ORB 特征点数目
-ORBextractor.scaleFactor: 1.2           # 金字塔每层之间的缩放系数
-ORBextractor.nLevels: 8                 # 金字塔层数
-ORBextractor.iniThFAST: 20              # FAST 初始阈值（图像分格子提取角点）
-ORBextractor.minThFAST: 7               # 如果初始阈值下无角点，则使用该较小阈值
+ORBextractor.nFeatures: 1000        # 减少总特征数，有助于均匀提取、提升匹配质量
+ORBextractor.scaleFactor: 1.1       # 减小金字塔缩放因子，提升特征尺度连续性
+ORBextractor.nLevels: 4             # 减少金字塔层数，避免在图像边缘产生虚假特征
+ORBextractor.iniThFAST: 15          # 初始 FAST 阈值降低，适配低纹理或暗区域
+ORBextractor.minThFAST: 5           # 最小 FAST 阈值降低，确保弱纹理下也能提取角点
 
 #--------------------------------------------------------------------------------------------
 # 线段追踪参数
@@ -127,14 +128,14 @@ PointCloudMapping.on: 1                         # 是否开启点云建图
 
 PointCloudMapping.type: "voxblox"                # 点云建图方法类型（如 voxelgrid、octomap、voxblox 等）
 
-PointCloudMapping.resolution: 0.01              # 地图分辨率
+PointCloudMapping.resolution: 0.003              # 地图分辨率
 PointCloudMapping.numKeyframesToQueueBeforeProcessing: 1  # 缓冲关键帧数
 PointCloudMapping.downSampleStep: 2              # 点云下采样步长
 PointCloudMapping.minDepth: 0.1                  # 最小深度值
 PointCloudMapping.maxDepth: 5                    # 最大深度值
 PointCloudMapping.removeUnstablePoints: 1        # 是否移除不稳定点
 
-PointCloudMapping.resetOnSparseMapChange: 1      # 稀疏地图改变时是否重置点云地图
+PointCloudMapping.resetOnSparseMapChange: 0      # 稀疏地图改变时是否重置点云地图
 PointCloudMapping.cloudDeformationOnSparseMapChange: 0  # 地图变化时是否进行云形变（不建议）
 
 PointCloudMapping.pointCounterThreshold: 3       # [octree_point] 模式下点计数阈值

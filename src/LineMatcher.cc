@@ -948,7 +948,7 @@ int LineMatcher::SearchByProjection(Frame &CurrentFrame, const Frame &LastFrame,
                                                          klCF.endPointX, klCF.endPointY, lineRepresentation);
                     logger << "line " << vIndices2[jj] <<", "<< lineRepresentation.theta*180/M_PI << ", " << lineRepresentation.d << std::endl;
                 }
-                logger << "-------------------------------------------------" << std::endl;
+                logger << "-----------line--------------------------------------" << std::endl;
 #endif
                 
                 if(vIndices2.empty())

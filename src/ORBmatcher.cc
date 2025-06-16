@@ -852,9 +852,14 @@ namespace PLVS2
 
     int ORBmatcher::SearchByBoW(KeyFramePtr& pKF1, KeyFramePtr& pKF2, vector<MapPointPtr> &vpMatches12)
     {
+        // 取出关键帧中特征点
         const vector<cv::KeyPoint> &vKeysUn1 = pKF1->mvKeysUn;
+        // 获取关键帧的特征向量
         const DBoW2::FeatureVector &vFeatVec1 = pKF1->mFeatVec;
+        // 获取关键帧的地图点
         const vector<MapPointPtr> vpMapPoints1 = pKF1->GetMapPointMatches();
+        // 关键点的描述子
+        // 这里的描述子是一个矩阵，每一行对应一个特征点的描述子
         const cv::Mat &Descriptors1 = pKF1->mDescriptors;
 
         const vector<cv::KeyPoint> &vKeysUn2 = pKF2->mvKeysUn;
@@ -862,6 +867,7 @@ namespace PLVS2
         const vector<MapPointPtr> vpMapPoints2 = pKF2->GetMapPointMatches();
         const cv::Mat &Descriptors2 = pKF2->mDescriptors;
 
+        // 实例化匹配器
         vpMatches12 = vector<MapPointPtr>(vpMapPoints1.size(),static_cast<MapPointPtr>(NULL));
         vector<bool> vbMatched2(vpMapPoints2.size(),false);
 
@@ -882,11 +888,13 @@ namespace PLVS2
         DBoW2::FeatureVector::const_iterator f1end = vFeatVec1.end();
         DBoW2::FeatureVector::const_iterator f2end = vFeatVec2.end();
 
-        while(f1it != f1end && f2it != f2end)
+        while (f1it != f1end && f2it != f2end)
         {
-            if(f1it->first == f2it->first)
+            if (f1it->first == f2it->first)
             {
-                for(size_t i1=0, iend1=f1it->second.size(); i1<iend1; i1++)
+                // Step 1：分别取出属于同一node的ORB特征点(只有属于同一node，才有可能是匹配点)
+                // first 元素就是node id，遍历
+                for(size_t i1=0, iend1=f1it->second.size(); i1<iend1; i1++) //f1it->second是特征点的索引
                 {
                     const size_t idx1 = f1it->second[i1];
                     if(pKF1 -> NLeft != -1 && idx1 >= pKF1 -> mvKeysUn.size()){
@@ -901,10 +909,10 @@ namespace PLVS2
 
                     const cv::Mat &d1 = Descriptors1.row(idx1);
 
-                    int bestDist1=256;
+                    int bestDist1=256; //最小距离
                     int bestIdx2 =-1 ;
-                    int bestDist2=256;
-
+                    int bestDist2=256; //次小距离
+                    //遍历当前帧同一node下的所有特征点
                     for(size_t i2=0, iend2=f2it->second.size(); i2<iend2; i2++)
                     {
                         const size_t idx2 = f2it->second[i2];
@@ -963,6 +971,7 @@ namespace PLVS2
                 f1it++;
                 f2it++;
             }
+            // 对齐node
             else if(f1it->first < f2it->first)
             {
                 f1it = vFeatVec1.lower_bound(f2it->first);

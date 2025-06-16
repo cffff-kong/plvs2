@@ -207,7 +207,7 @@ namespace PLVS2 {
             cout << "\t-Computed rectification maps" << endl;
         }
 
-        cout << "----------------------------------" << endl;
+        cout << "----------Settings------------------------" << endl;
     }
 
     Settings* Settings::create(const std::string &configFile, const int& sensor)

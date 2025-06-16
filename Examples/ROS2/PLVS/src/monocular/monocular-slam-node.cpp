@@ -9,7 +9,8 @@ MonocularSlamNode::MonocularSlamNode(PLVS2::System* pSLAM)
 {
     m_SLAM = pSLAM;
     // std::cout << "slam changed" << std::endl;
-    string name="/ruben/right/image_raw";
+    string name="/ruben/left/image_raw";
+    //string name="/camera/color/image_raw";
     m_image_subscriber = this->create_subscription<ImageMsg>(
         name,
         10,
@@ -40,6 +41,6 @@ void MonocularSlamNode::GrabImage(const ImageMsg::SharedPtr msg)
         return;
     }
 
-    std::cout<<"one frame has been sent"<<std::endl;
+    //std::cout<<"one frame has been sent"<<std::endl;
     m_SLAM->TrackMonocular(m_cvImPtr->image, Utility::StampToSec(msg->header.stamp));
 }

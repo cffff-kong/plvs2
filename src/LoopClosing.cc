@@ -3104,7 +3104,7 @@ void LoopClosing::MergeLocal2()
 
 void LoopClosing::CheckObservations(set<KeyFramePtr> &spKFsMap1, set<KeyFramePtr> &spKFsMap2)
 {
-    cout << "----------------------" << endl;
+    cout << "----------CheckObservations------------" << endl;
     for(KeyFramePtr pKFi1 : spKFsMap1)
     {
         map<KeyFramePtr, int> mMatchedMP;
@@ -3148,7 +3148,7 @@ void LoopClosing::CheckObservations(set<KeyFramePtr> &spKFsMap1, set<KeyFramePtr
             }
         }
     }
-    cout << "----------------------" << endl;
+    cout << "---------CheckObservations-------------" << endl;
 }
 
 // TODO: Luigi add map objects management

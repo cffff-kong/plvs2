@@ -937,7 +937,7 @@ void MapObject::SaveRefObservations()
             const Sophus::SE3f Twk = pKF->GetPoseInverse();
             Sophus::SE3f Two = Twk * observation.GetSE3();
 
-            ss << "----------------------------------------------" << std::endl;
+            ss << "-------SaveRefObservations---------------------------------------" << std::endl;
             if(pKF == mpRefKF) ss << " **** reference KeyFramePtr ** " << std::endl;        
             ss << "KF id: " << pKF->mnId << std::endl;  
             ss << "bad: " << (int)mbBad << std::endl;

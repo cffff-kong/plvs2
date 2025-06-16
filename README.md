@@ -96,8 +96,11 @@ cd ros2_ws
 source install/local_setup.bash
 ### rgbd：
 ros2 run plvs rgbd /home/kongdechang/repo/plvs/Vocabulary/ORBvoc.txt /home/kongdechang/repo/plvs/Settings/ros/Orbbec_dcw_ros.yaml 
+ros2 run plvs rgbd /home/kongdechang/repo/plvs/Vocabulary/ORBvoc.txt /home/kongdechang/repo/plvs/Settings/ros/ruben_mono_ros.yaml 
 ### mono：
 ros2 run plvs mono /home/kongdechang/repo/plvs/Vocabulary/ORBvoc.txt /home/kongdechang/repo/plvs/Settings/ros/Orbbec_astra_ros.yaml 
+ros2 run plvs mono /home/kongdechang/repo/plvs/Vocabulary/ORBvoc.txt /home/kongdechang/repo/plvs/Settings/ros/ruben_mono_ros.yaml 
+
 ### stereo:
 ros2 run plvs stereo /home/kongdechang/repo/plvs/Vocabulary/ORBvoc.txt /home/kongdechang/repo/plvs/Settings/ros/Orbbec_astra_stereo_ros.yaml false
 ros2 run plvs stereo /home/kongdechang/repo/plvs/Vocabulary/ORBvoc.txt /home/kongdechang/repo/plvs/Settings/ros/ruben_stereo.yaml  false
